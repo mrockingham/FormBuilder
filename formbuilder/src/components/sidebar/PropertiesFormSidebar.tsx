@@ -1,7 +1,7 @@
 import React from "react";
-import useBuilderStore from "../stores/designBuilderStore";
-import { FormElements } from "./FormElements";
-import { Button } from "@mui/material";
+import useBuilderStore from "../../stores/designBuilderStore";
+import { FormElements } from "../FormElements";
+import { Button, Divider } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 
 const PropertiesFormSidebar = () => {
@@ -9,7 +9,8 @@ const PropertiesFormSidebar = () => {
 
   if (!selectedElement) return null;
 
-  const PropertiesForm = FormElements[selectedElement?.type]?.formComponent;
+  const PropertiesForm =
+    FormElements[selectedElement?.type]?.propertiesComponent;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -30,7 +31,8 @@ const PropertiesFormSidebar = () => {
           <AiOutlineClose />
         </Button>
       </div>
-      <PropertiesForm />;
+      <Divider style={{ marginBottom: "30px" }} />
+      <PropertiesForm elementInstance={selectedElement} />
     </div>
   );
 };

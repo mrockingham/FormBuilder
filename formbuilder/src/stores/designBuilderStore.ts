@@ -7,6 +7,7 @@ interface DesignerContext {
     removeElement: (id: string) => void;
     selectedElement: FormElementInstance | null;
     setSelectedElement: (element: FormElementInstance | null) => void;
+    updateElement: (id: string, element: FormElementInstance) => void;
 }
 
 const useBuilderStore = create<DesignerContext>((set) => ({
@@ -27,6 +28,12 @@ const useBuilderStore = create<DesignerContext>((set) => ({
     selectedElement: null,
     setSelectedElement: (element) => {
         set({ selectedElement: element });
+    },
+    updateElement: (id, element) => {
+        set(state => {
+            const newElements = state.elements.map(e => e.id === id ? element : e);
+            return { elements: newElements }
+        });
     },
 
 }))

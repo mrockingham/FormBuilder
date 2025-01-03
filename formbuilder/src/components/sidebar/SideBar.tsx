@@ -1,7 +1,7 @@
 import React from "react";
-import { FormElements } from "./FormElements";
+import { FormElements } from "../FormElements";
 import SidebarBtnElement from "./SidebarBtnElement";
-import useBuilderStore from "../stores/designBuilderStore";
+import useBuilderStore from "../../stores/designBuilderStore";
 import FormElementsSidebar from "./FormElementsSidebar";
 import PropertiesFormSideBar from "./PropertiesFormSidebar";
 
@@ -19,7 +19,7 @@ const SideBar = () => {
         gap: "10px",
         border: "1px solid black",
         overflowY: "auto",
-        backgroundColor: "lightgray",
+        backgroundColor: "gray",
       }}
     >
       {!selectedElement && <FormElementsSidebar />}

@@ -5,9 +5,10 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import Designer from "../components/Designer";
+import Designer from "../components/designer/Designer";
 import useFormStore from "../stores/formStore";
-import DragOverlayWrapper from "../components/DragOverlayWrapper";
+import DragOverlayWrapper from "../components/designer/DragOverlayWrapper";
+import PreviewDialogBtn from "../components/preview/PreviewDialogBtn";
 
 const FormBuilder = () => {
   const { forms, currentForm } = useFormStore();
@@ -26,30 +27,33 @@ const FormBuilder = () => {
 
   const sensors = useSensors(mouseSensor, touchSensor);
   return (
-    <DndContext sensors={sensors}>
-      <div style={{ height: "100%" }}>
-        <h1 style={{ borderBottom: "1px solid black", width: "100%" }}>
-          FormBuilder: {currentForm?.name}
-        </h1>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            flexGrow: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            overflowY: "auto",
-            height: "100%",
-            //   backgroundColor: "yellow",
-            backgroundImage: `url(./circuit-board.svg)`,
-          }}
-        >
-          <Designer />
+    <>
+      <h1 style={{ borderBottom: "1px solid black", width: "100%" }}>
+        FormBuilder: {currentForm?.name}
+      </h1>
+      <PreviewDialogBtn />
+      <DndContext sensors={sensors}>
+        <div style={{ height: "100%" }}>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexGrow: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              overflowY: "auto",
+              height: "100%",
+              backgroundColor: "lightsteelblue",
+              backgroundImage: `url(./diagonal-lines.svg)`,
+            }}
+          >
+            <Designer />
+          </div>
         </div>
-      </div>
-      <DragOverlayWrapper />
-    </DndContext>
+        <DragOverlayWrapper />
+      </DndContext>
+    </>
   );
 };
 

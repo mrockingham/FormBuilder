@@ -4,29 +4,34 @@ import {
   FormElement,
   FormElementInstance,
 } from "../FormElements";
-import { MdTextFields } from "react-icons/md";
-import { FormControl, TextField, Switch } from "@mui/material";
-import { Form } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
+import { IoIosCheckboxOutline } from "react-icons/io";
+import {
+  FormControlLabel,
+  FormGroup,
+  Checkbox,
+  FormControl,
+  Switch,
+  TextField,
+} from "@mui/material";
 import useBuilderStore from "../../stores/designBuilderStore";
+import { Controller, useForm } from "react-hook-form";
 
-const typeSmall: ElementsType = "TextFieldSmall";
-const typeMedium: ElementsType = "TextFieldMedium";
-const typeLarge: ElementsType = "TextFieldLarge";
+const typeSmall: ElementsType = "CheckboxSmall";
+const typeMedium: ElementsType = "CheckboxMedium";
+const typeLarge: ElementsType = "CheckboxLarge";
 
 const extraAttr = {
   label: "Text Field",
   required: false,
   name: "text-field",
 };
-
-type CustomInstance = FormElementInstance & { extraAttr: typeof extraAttr };
-
 interface PropertiesFormData {
   label: string;
   name: string;
   required: boolean;
 }
+
+type CustomInstance = FormElementInstance & { extraAttr: typeof extraAttr };
 
 const PropertiesComponent = ({ elementInstance }: { elementInstance: any }) => {
   const element = elementInstance as CustomInstance;
@@ -80,22 +85,6 @@ const PropertiesComponent = ({ elementInstance }: { elementInstance: any }) => {
 
         <Controller
           control={form.control}
-          name="name"
-          render={({ field }) => (
-            <div>
-              <TextField
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") e.currentTarget.blur();
-                }}
-                label="Name"
-                {...field}
-              />
-            </div>
-          )}
-        ></Controller>
-
-        <Controller
-          control={form.control}
           name="required"
           render={({ field }) => (
             <div>
@@ -107,15 +96,8 @@ const PropertiesComponent = ({ elementInstance }: { elementInstance: any }) => {
           )}
         ></Controller>
       </div>
-
-      {/* {element.type === "TextFieldSmall" && (
-            <FormControl>
-            <Switch checked={element.size === 1} />
-            </FormControl>
-        )} */}
     </form>
   );
-  //   return <div>Form Properties for {element.extraAttr.label}</div>;
 };
 
 const FormComponent = ({
@@ -124,21 +106,17 @@ const FormComponent = ({
   elementInstance: FormElementInstance;
 }) => {
   const element = elementInstance as CustomInstance;
-  console.log("this", elementInstance);
-  return (
-    <div style={{ width: "100%" }}>
-      <div>{element?.extraAttr?.name}</div>
+  console.log("designer", element);
 
-      <TextField
-        size="small"
-        style={{ width: "100%", height: "40px" }}
-        label={element?.extraAttr?.label}
-        required={element?.extraAttr?.required}
-      />
+  return (
+    <div>
+      <h3>{element.extraAttr.name}</h3>
+      <FormGroup>
+        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+      </FormGroup>
     </div>
   );
 };
-
 const DesignerComponent = ({
   elementInstance,
 }: {
@@ -150,63 +128,60 @@ const DesignerComponent = ({
   return (
     <div>
       <h3>{element.extraAttr.name}</h3>
-      <TextField
-        label={element.extraAttr.label}
-        required={element.extraAttr.required}
-      />
+      <FormGroup>
+        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+      </FormGroup>
     </div>
   );
 };
 
-export const TextFieldFormElementSmall: FormElement = {
+export const CheckBoxFormElementSmall: FormElement = {
   type: typeSmall,
   construct: (id: string) => ({
     id,
     type: typeSmall,
     size: 1,
     extraAttr: {
-      label: "Text FieldSmall",
+      label: "checkBox Small",
       required: false,
-      name: "text-fieldSmall",
+      name: "CheckBox Small",
     },
   }),
-  designerBtnElement: { icon: MdTextFields, label: "1" },
+  designerBtnElement: { icon: IoIosCheckboxOutline, label: "1" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 };
-
-export const TextFieldFormElementMedium: FormElement = {
+export const CheckBoxFormElementMedium: FormElement = {
   type: typeMedium,
   construct: (id: string) => ({
     id,
     type: typeMedium,
     size: 2,
-
     extraAttr: {
-      label: "Text Field Medium",
+      label: "checkBox Small",
       required: false,
-      name: "text-field Medium",
+      name: "CheckBox Small",
     },
   }),
-  designerBtnElement: { icon: MdTextFields, label: "2" },
+  designerBtnElement: { icon: IoIosCheckboxOutline, label: "2" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 };
-export const TextFieldFormElementLarge: FormElement = {
+export const CheckBoxFormElementLarge: FormElement = {
   type: typeLarge,
   construct: (id: string) => ({
     id,
     type: typeLarge,
     size: 3,
     extraAttr: {
-      label: "Text Field Large",
+      label: "checkBox Small",
       required: false,
-      name: "text-field Large",
+      name: "CheckBox Small",
     },
   }),
-  designerBtnElement: { icon: MdTextFields, label: "3" },
+  designerBtnElement: { icon: IoIosCheckboxOutline, label: "3" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,

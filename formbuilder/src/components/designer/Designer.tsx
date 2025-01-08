@@ -144,10 +144,10 @@ const Designer = () => {
   return (
     <div
       style={{
-        height: "100%",
         width: "100%",
         display: "flex",
         flexDirection: "row",
+        height: "100%",
         flexGrow: 1,
       }}
     >
@@ -157,7 +157,14 @@ const Designer = () => {
             setSelectedElement(null);
           }
         }}
-        style={{ padding: "10px", width: "100%", height: "100%" }}
+        style={{
+          padding: "10px",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          flexGrow: 1,
+        }}
       >
         <div
           ref={droppable.setNodeRef}
@@ -167,6 +174,10 @@ const Designer = () => {
             height: "100%",
             margin: "auto",
             borderRadius: "1rem",
+            display: "flex",
+            flexDirection: "column",
+
+            flexGrow: 1,
 
             overflowY: "auto",
             border: droppable.isOver ? "4px solid blue" : "",

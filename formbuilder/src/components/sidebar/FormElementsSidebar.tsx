@@ -11,7 +11,15 @@ import { FaChevronDown } from "react-icons/fa";
 
 const FormElementsSidebar = () => {
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        flexGrow: 1,
+        border: "1px solid blue",
+      }}
+    >
       <div style={{ padding: "10px" }}>Input Elements</div>
       <Accordion>
         <AccordionSummary

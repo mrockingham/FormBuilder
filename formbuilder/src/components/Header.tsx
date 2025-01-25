@@ -10,11 +10,14 @@ const Header = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: "10px 20px",
-        backgroundColor: "gray",
-        height: "50px",
+        backgroundColor: "white",
+        height: "30px",
+        borderBottom: "1px solid #ccc",
       }}
     >
-      <Link to={"/"}>Home</Link>
+      <Link to={"/"}>
+        <h2>Home</h2>
+      </Link>
     </div>
   );
 };

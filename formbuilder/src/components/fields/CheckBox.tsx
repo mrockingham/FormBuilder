@@ -106,7 +106,6 @@ const FormComponent = ({
   elementInstance: FormElementInstance;
 }) => {
   const element = elementInstance as CustomInstance;
-  console.log("designer", element);
 
   return (
     <div>
@@ -123,7 +122,6 @@ const DesignerComponent = ({
   elementInstance: FormElementInstance;
 }) => {
   const element = elementInstance as CustomInstance;
-  console.log("designer", element);
 
   return (
     <div>

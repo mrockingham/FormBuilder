@@ -21,14 +21,14 @@ const PreviewDialogBtn = () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="outlined">
+      <Button onClick={() => setOpen(true)}>
         <MdPreview size={20} />
         Preview
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose}>
         <div
           style={{
-            height: "90vh",
+            height: "100%",
             width: "100%",
           }}
         >
@@ -93,11 +93,11 @@ const PreviewDialogBtn = () => {
                 }}
               >
                 {elements.map((element) => {
-                  //   console.log("btn", element);
                   const FormComponent =
-                    FormElements[element.type].formComponent;
+                    FormElements[element.type]?.formComponent;
                   return (
                     <div
+                      key={element?.id}
                       style={{
                         width:
                           element?.size === 3

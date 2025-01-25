@@ -17,9 +17,10 @@ const SideBar = () => {
         flexDirection: "column",
         flexGrow: 1,
         gap: "10px",
-        border: "1px solid black",
+        boxShadow: `20px 20px 60px #c6cdc1,
+             -20px -20px 60px #ffffff`,
         overflowY: "auto",
-        backgroundColor: "gray",
+        backgroundColor: "white",
       }}
     >
       {!selectedElement && <FormElementsSidebar />}

@@ -9,6 +9,7 @@ import { FormControl, TextField, Switch } from "@mui/material";
 import { Form } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import useBuilderStore from "../../stores/designBuilderStore";
+import { capitalizeFirstLetter } from "../utils/utils";
 
 const typeSmall: ElementsType = "TextFieldSmall";
 const typeMedium: ElementsType = "TextFieldMedium";
@@ -124,15 +125,18 @@ const FormComponent = ({
   elementInstance: FormElementInstance;
 }) => {
   const element = elementInstance as CustomInstance;
-  console.log("this", elementInstance);
+
   return (
     <div style={{ width: "100%" }}>
-      <div>{element?.extraAttr?.name}</div>
+      <div>{capitalizeFirstLetter(element?.extraAttr?.name)}</div>
 
       <TextField
         size="small"
-        style={{ width: "100%", height: "40px" }}
-        label={element?.extraAttr?.label}
+        style={{
+          width: "100%",
+          height: "40px",
+        }}
+        label={capitalizeFirstLetter(element?.extraAttr?.label)}
         required={element?.extraAttr?.required}
       />
     </div>
@@ -145,15 +149,44 @@ const DesignerComponent = ({
   elementInstance: FormElementInstance;
 }) => {
   const element = elementInstance as CustomInstance;
-  console.log("designer", element);
-
+  console.log("element", element);
   return (
-    <div>
-      <h3>{element.extraAttr.name}</h3>
-      <TextField
-        label={element.extraAttr.label}
-        required={element.extraAttr.required}
-      />
+    <div style={{ width: "100%", marginRight: "30px", padding: "5px" }}>
+      <div>{capitalizeFirstLetter(element.extraAttr.name)}</div>
+      <div style={{ maxHeight: "30px", width: "100%" }}>
+        <TextField
+          // variant="standard"
+          size="small"
+          style={{
+            // border: "1px solid limegreen",
+            width: "100%",
+            marginRight: "20px",
+            marginTop: "10px",
+            backgroundColor: "rgba(255, 255, 255, 0.0)",
+            border: "1px solid limegreen",
+
+            boxShadow: `-2px 5px 16px #b8beb3,
+             -16px -10px 16px #ffffff`,
+          }}
+          label={capitalizeFirstLetter(element.extraAttr.label)}
+          required={element.extraAttr.required}
+        />
+        {/* <input
+          type="text"
+          style={{
+            // border: "1px solid limegreen",
+            width: "100%",
+            marginRight: "20px",
+            marginTop: "10px",
+            backgroundColor: "rgba(255, 255, 255, 0.0)",
+            border: "1px solid limegreen",
+
+            boxShadow: `1px 5px 16px #b8beb3,
+             -16px -10px 16px #ffffff`,
+          }}
+          placeholder={`${capitalizeFirstLetter(element.extraAttr.label)}...`}
+        /> */}
+      </div>
     </div>
   );
 };

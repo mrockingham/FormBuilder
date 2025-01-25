@@ -15,6 +15,7 @@ import useBuilderStore from "../../stores/designBuilderStore";
 import { idGenerator } from "../utils/idGenerator";
 import { Button } from "@mui/material";
 import { BiSolidTrash } from "react-icons/bi";
+import DiagonalLines from "../../img/diagonal-lines.svg";
 
 ////May Seperate
 const Designer = () => {
@@ -141,16 +142,20 @@ const Designer = () => {
     },
   });
 
+  console.log("droppable.isOver", droppable.isOver);
+
   return (
     <div
       style={{
-        width: "100%",
+        maxWidth: "100%",
         display: "flex",
-        flexDirection: "row",
-        height: "100%",
+        backgroundColor: "#ECF4E6",
+
+        // backgroundImage: DiagonalLines,
         flexGrow: 1,
       }}
     >
+      <SideBar />
       <div
         onClick={() => {
           if (selectedElement) {
@@ -158,29 +163,34 @@ const Designer = () => {
           }
         }}
         style={{
-          padding: "10px",
+          padding: "30px",
           width: "100%",
+
           display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          flexGrow: 1,
         }}
       >
         <div
           ref={droppable.setNodeRef}
           style={{
-            backgroundColor: "gray",
             maxWidth: "920px",
             height: "100%",
             margin: "auto",
-            borderRadius: "1rem",
             display: "flex",
             flexDirection: "column",
 
+            backgroundColor: "white",
+            // background: "linear-gradient(145deg, #ffffff, #ECF4E6)",
+            // boxShadow: `20px 20px 60px #c6cdc1,
+            // -20px -20px 60px #ffffff`,
+            borderRadius: "1rem",
             flexGrow: 1,
-
             overflowY: "auto",
-            border: droppable.isOver ? "4px solid blue" : "",
+            overflowX: "hidden",
+            border: "1px solid lightgray",
+            boxShadow: "0 0 8px gray",
+            // border: droppable.isOver
+            //   ? "4px solid limegreen"
+            //   : "1px solid limegreen",
           }}
         >
           {!droppable.isOver && elements?.length === 0 && (
@@ -192,15 +202,16 @@ const Designer = () => {
                 flexGrow: 1,
                 alignItems: "center",
                 justifyContent: "center",
+                maxWidth: "920px",
+
+                backgroundImage: `url(./diagonal-lines.svg)`,
               }}
             >
               Drop Here
             </div>
           )}
           {droppable.isOver && elements?.length === 0 && (
-            <div style={{ padding: "4px", width: "100%" }}>
-              <div style={{ backgroundColor: "black", height: "120px" }}></div>
-            </div>
+            <div style={{ padding: "4px", width: "100%" }}></div>
           )}
           {elements?.length > 0 && (
             <div
@@ -212,8 +223,8 @@ const Designer = () => {
                 alignItems: "flex-start",
 
                 width: "100%",
-                gap: "10px",
-                padding: "4px",
+                gap: "20px",
+                padding: "20px",
               }}
             >
               {elements.map((element) => (
@@ -223,7 +234,6 @@ const Designer = () => {
           )}
         </div>
       </div>
-      <SideBar />
     </div>
   );
 };
@@ -283,7 +293,7 @@ const DesignerElementWrapper = ({
 
   if (draggable.isDragging) return null;
   const DesignerElement = FormElements[element.type].designerCompontent;
-  console.log("element", element);
+
   return (
     <div
       ref={draggable.setNodeRef}
@@ -292,6 +302,11 @@ const DesignerElementWrapper = ({
       style={{
         position: "relative",
         height: "120px",
+        border: "1px solid lightgray",
+        boxShadow: "0 0 10px lightgray",
+        // border: "2px solid limegreen",
+        // boxShadow: "0 0 10px rgba(0, 255, 0, 0.4)",
+
         /////////////////////////////// where i need to update width
         width: element.size === 3 ? "90%" : element.size === 2 ? "47%" : "26%",
         display: "flex",
@@ -299,7 +314,6 @@ const DesignerElementWrapper = ({
         cursor: "pointer",
         borderRadius: "10px",
         overflow: "hidden",
-        border: "2px solid black",
       }}
       onMouseEnter={() => setMouseIsOver(true)}
       onMouseLeave={() => setMouseIsOver(false)}
@@ -310,7 +324,13 @@ const DesignerElementWrapper = ({
     >
       <div
         ref={topHalf.setNodeRef}
-        style={{ position: "absolute", width: "100%", height: "50%", top: 0 }}
+        style={{
+          backgroundColor: "transparent",
+          position: "absolute",
+          width: "100%",
+          height: "50%",
+          top: 0,
+        }}
       ></div>
       <div
         ref={rightHalf.setNodeRef}
@@ -339,7 +359,7 @@ const DesignerElementWrapper = ({
                 display: "flex",
                 justifyContent: "center",
                 height: "100%",
-                backgroundColor: "orange",
+                // backgroundColor: "orange",
               }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -401,16 +421,13 @@ const DesignerElementWrapper = ({
           display: "flex",
           width: "100%",
           height: "120px",
-          alignItems: "center",
-          border: "1px solid black",
-          //   borderTop: topHalf.isOver ? "1px solid blue" : "",
-          //   borderBottom: bottomHalf.isOver ? "1px solid blue" : "",
-          backgroundColor: mouseIsOver
-            ? "rgba(236, 240, 41, 0.1)"
-            : " rgba(236, 240, 241)",
+          padding: "10px",
+          justifyContent: "center",
+
+          backgroundColor: mouseIsOver ? "limegreen" : " #ECF4E6",
         }}
       >
-        <DesignerElement elementInstance={element} />
+        {!mouseIsOver && <DesignerElement elementInstance={element} />}
       </div>
       {bottomHalf.isOver && (
         <div

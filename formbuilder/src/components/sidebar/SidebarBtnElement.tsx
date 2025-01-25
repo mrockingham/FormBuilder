@@ -12,7 +12,7 @@ const SidebarBtnElement = ({ formElement }: { formElement: FormElement }) => {
     },
   });
   const { label, icon: Icon } = formElement.designerBtnElement;
-  console.log("formElement", formElement.type);
+
   return (
     <Button
       ref={draggable.setNodeRef}
@@ -23,22 +23,25 @@ const SidebarBtnElement = ({ formElement }: { formElement: FormElement }) => {
         gap: "1px",
 
         cursor: "grab",
-        border: draggable.isDragging ? "1px solid red" : "",
+        border: draggable.isDragging ? "1px solid red" : "1px solid lightgray",
+        boxShadow: draggable.isDragging ? "0 0 10px red" : "0 0 8px gray",
       }}
       startIcon={
         <Icon
           style={{
             paddingLeft: "8px",
+            color: "limegreen",
           }}
         />
       }
       {...draggable.attributes}
       {...draggable.listeners}
     >
-      <div style={{}}>
+      <div style={{ color: "limegreen" }}>
         {label}
         <LinearProgress
-          style={{ width: "40px" }}
+          style={{ width: "40px", color: "limegreen" }}
+          color="inherit"
           variant="determinate"
           value={
             formElement.type?.includes("Small")

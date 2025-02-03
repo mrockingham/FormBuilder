@@ -1,28 +1,25 @@
-// fields/TextField.tsx
+// fields/TextArea.tsx
 import React, { useEffect } from "react";
 import {
   FormElement,
   FormElementInstance,
   FormElementKey,
-  InputSize,
 } from "../FormElements";
-import { MdTextFields } from "react-icons/md";
-import { TextField, FormControl, Switch } from "@mui/material";
+import { MdSubject } from "react-icons/md";
+import { Checkbox, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import useBuilderStore from "../../stores/designBuilderStore";
 import { capitalizeFirstLetter } from "../utils/utils";
 
-// Use one key for TextField.
-const type: FormElementKey = "TextField";
+const type: FormElementKey = "TextArea";
 
-// Define the extra attributes for a TextField.
-export type TextFieldExtraAttr = {
+export type TextAreaExtraAttr = {
   label: string;
   required: boolean;
   name: string;
 };
 
-type CustomInstance = FormElementInstance<TextFieldExtraAttr>;
+type CustomInstance = FormElementInstance<TextAreaExtraAttr>;
 
 interface PropertiesFormData {
   label: string;
@@ -34,7 +31,6 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
   const { updateElement } = useBuilderStore();
-
   const form = useForm<PropertiesFormData>({
     mode: "onBlur",
     defaultValues: {
@@ -94,10 +90,8 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         control={form.control}
         name="required"
         render={({ field }) => (
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <FormControl>
-              <Switch checked={field.value} onChange={field.onChange} />
-            </FormControl>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Checkbox checked={field.value} onChange={field.onChange} />
             <span>Required</span>
           </div>
         )}
@@ -110,14 +104,13 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
   return (
-    <div style={{ width: "100%" }}>
-      <TextField
-        size="small"
-        fullWidth
-        label={capitalizeFirstLetter(elementInstance.extraAttr.label)}
-        required={elementInstance.extraAttr.required}
-      />
-    </div>
+    <TextField
+      multiline
+      rows={4}
+      fullWidth
+      label={capitalizeFirstLetter(elementInstance.extraAttr.label)}
+      required={elementInstance.extraAttr.required}
+    />
   );
 };
 
@@ -125,38 +118,30 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
   return (
-    <div
-      style={{
-        width: "70%",
-        // padding: "5px",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <TextField
-        size="small"
-        fullWidth
-        variant="outlined"
-        label={capitalizeFirstLetter(elementInstance.extraAttr.label)}
-        required={elementInstance.extraAttr.required}
-      />
-    </div>
+    <TextField
+      multiline
+      rows={2}
+      fullWidth
+      variant="outlined"
+      label={capitalizeFirstLetter(elementInstance.extraAttr.label)}
+      required={elementInstance.extraAttr.required}
+    />
   );
 };
 
-export const TextFieldFormElement: FormElement<TextFieldExtraAttr> = {
+export const TextAreaFormElement: FormElement<TextAreaExtraAttr> = {
   type,
-  construct: (id: string, sizeOverride?: InputSize) => ({
+  construct: (id: string) => ({
     id,
     type,
-    size: sizeOverride || "100%", // default size if no override is provided
+    size: "1/2",
     extraAttr: {
-      label: "Text Field",
+      label: "Text Area",
       required: false,
-      name: "text-field",
+      name: "text-area",
     },
   }),
-  designerBtnElement: { icon: MdTextFields, label: "TextField" },
+  designerBtnElement: { icon: MdSubject, label: "TextArea" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,

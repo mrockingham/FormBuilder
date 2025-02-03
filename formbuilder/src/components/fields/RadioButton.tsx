@@ -1,15 +1,15 @@
-// fields/Checkbox.tsx
+// fields/Radio.tsx
 import React, { useEffect } from "react";
 import {
   FormElement,
   FormElementInstance,
   FormElementKey,
 } from "../FormElements";
-import { IoIosCheckboxOutline } from "react-icons/io";
+import { IoIosRadioButtonOff } from "react-icons/io"; // radio icon from react-icons
 import {
   FormControlLabel,
   FormGroup,
-  Checkbox,
+  Radio,
   FormControl,
   Switch,
   TextField,
@@ -17,18 +17,18 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import useBuilderStore from "../../stores/designBuilderStore";
 
-// Use one key for the Checkbox element.
-const type: FormElementKey = "Checkbox";
+// Use one key for the Radio element. Ensure "Radio" is added to FormElementKey union.
+const type: FormElementKey = "Radio";
 
-// Define the extra attributes for a Checkbox.
-export type CheckboxExtraAttr = {
+// Define the extra attributes for a Radio element.
+export type RadioExtraAttr = {
   label: string;
   required: boolean;
   name: string;
 };
 
 // Create a custom instance type using the extra attributes.
-type CustomInstance = FormElementInstance<CheckboxExtraAttr>;
+type CustomInstance = FormElementInstance<RadioExtraAttr>;
 
 // Define the shape of the form data used in the properties editor.
 interface PropertiesFormData {
@@ -37,7 +37,7 @@ interface PropertiesFormData {
   required: boolean;
 }
 
-// The properties editor component for the Checkbox.
+// The properties editor component for the Radio element.
 const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
@@ -118,7 +118,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   );
 };
 
-// The form component renders the checkbox as it will appear in the final form.
+// The form component renders the radio as it will appear in the final form.
 const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
@@ -128,7 +128,7 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       <FormGroup>
         <FormControlLabel
           control={
-            <Checkbox defaultChecked={elementInstance.extraAttr.required} />
+            <Radio defaultChecked={elementInstance.extraAttr.required} />
           }
           label={elementInstance.extraAttr.label}
         />
@@ -137,7 +137,7 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   );
 };
 
-// The designer component renders the checkbox in the form builder.
+// The designer component renders the radio in the form builder.
 const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
@@ -147,7 +147,7 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       <FormGroup>
         <FormControlLabel
           control={
-            <Checkbox defaultChecked={elementInstance.extraAttr.required} />
+            <Radio defaultChecked={elementInstance.extraAttr.required} />
           }
           label={elementInstance.extraAttr.label}
         />
@@ -156,21 +156,21 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   );
 };
 
-// Export a single unified Checkbox form element.
+// Export a single unified Radio form element.
 // The size property here uses one of your custom sizing values.
-export const CheckboxFormElement: FormElement<CheckboxExtraAttr> = {
+export const RadioFormElement: FormElement<RadioExtraAttr> = {
   type,
-  construct: (id: string) => ({
+  construct: (id: string, sizeOverride?: string) => ({
     id,
     type,
-    size: "1/2", // default size; this value can be updated later
+    size: (sizeOverride as any) || "1/2", // default size; update as needed
     extraAttr: {
-      label: "Checkbox",
+      label: "Radio Button",
       required: false,
-      name: "Checkbox",
+      name: "Radio",
     },
   }),
-  designerBtnElement: { icon: IoIosCheckboxOutline, label: "Checkbox" },
+  designerBtnElement: { icon: IoIosRadioButtonOff, label: "Radio" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,

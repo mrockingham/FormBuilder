@@ -1,17 +1,51 @@
 import React from "react";
-import { FormElement } from "../FormElements";
+import { FormElement, InputSize } from "../FormElements";
 import { Button, LinearProgress } from "@mui/material";
 import { useDraggable } from "@dnd-kit/core";
 
-const SidebarBtnElement = ({ formElement }: { formElement: FormElement }) => {
+// Map each InputSize to a percentage value
+const sizeMap: Record<InputSize, number> = {
+  "1/2": 50,
+  "1/3": 33,
+  "2/3": 66,
+  "1/4": 25,
+  "3/4": 75,
+  "1/6": 17,
+  "5/6": 83,
+  "100%": 100,
+};
+
+interface SidebarBtnElementProps {
+  formElement: FormElement<any>;
+  sizeOverride?: InputSize;
+  labelOverride?: string;
+}
+
+const SidebarBtnElement: React.FC<SidebarBtnElementProps> = ({
+  formElement,
+  sizeOverride,
+  labelOverride,
+}) => {
   const draggable = useDraggable({
-    id: `designer-btn-${formElement.type}`,
+    id: `designer-btn-${formElement.type}-${sizeOverride || "default"}`,
     data: {
       type: formElement.type,
       isDesignerBtnElement: true,
+      sizeOverride,
     },
   });
   const { label, icon: Icon } = formElement.designerBtnElement;
+
+  // Create a default instance to extract the default size.
+  // (Assuming the construct function is pure and returns a default instance.)
+  const defaultInstance = formElement.construct("dummy-id");
+
+  // Use the override if provided, otherwise use the default instance's size.
+  const usedSize = sizeOverride || (defaultInstance.size as InputSize);
+  const progressValue = sizeMap[usedSize] || 100;
+
+  // Use the label override if provided, otherwise use the element's designer label.
+  const usedLabel = labelOverride || label;
 
   return (
     <Button
@@ -20,11 +54,13 @@ const SidebarBtnElement = ({ formElement }: { formElement: FormElement }) => {
       style={{
         display: "flex",
         flexDirection: "column",
+        alignItems: "flex-end",
+        justifyContent: "flex-start",
         gap: "1px",
-
         cursor: "grab",
         border: draggable.isDragging ? "1px solid red" : "1px solid lightgray",
         boxShadow: draggable.isDragging ? "0 0 10px red" : "0 0 8px gray",
+        maxWidth: "80px",
       }}
       startIcon={
         <Icon
@@ -37,19 +73,13 @@ const SidebarBtnElement = ({ formElement }: { formElement: FormElement }) => {
       {...draggable.attributes}
       {...draggable.listeners}
     >
-      <div style={{ color: "limegreen" }}>
-        {label}
+      <div style={{ color: "limegreen", fontSize: "10px" }}>
+        {usedLabel}
         <LinearProgress
           style={{ width: "40px", color: "limegreen" }}
           color="inherit"
           variant="determinate"
-          value={
-            formElement.type?.includes("Small")
-              ? 33
-              : formElement.type?.includes("Medium")
-              ? 66
-              : 100
-          }
+          value={progressValue}
         />
       </div>
     </Button>
@@ -59,7 +89,7 @@ const SidebarBtnElement = ({ formElement }: { formElement: FormElement }) => {
 export const SidebarBtnElementDragOverlay = ({
   formElement,
 }: {
-  formElement: FormElement;
+  formElement: FormElement<any>;
 }) => {
   const { label, icon: Icon } = formElement.designerBtnElement;
   return (

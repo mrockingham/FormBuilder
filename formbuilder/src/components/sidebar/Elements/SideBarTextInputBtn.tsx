@@ -5,19 +5,28 @@ import { MdPowerInput } from "react-icons/md";
 import SideBarElementsSelectSize from "./SideBarElementsSelectSize";
 
 const SideBarTextInputBtn = () => {
-  const [showSelectedElement, setShowSelectedElement] = useState(false);
+  const [showSelectedElement, setShowSelectedElement] = useState({
+    showElements: false,
+    Element: "",
+  });
+
   return (
     <>
-      {!showSelectedElement ? (
+      {!showSelectedElement.showElements ? (
         <Box>
           <Box textAlign={"center"} fontWeight={600} m={2}>
-            Text Input Elements
+            Input Elements
           </Box>
           <Box mb={2} display="flex" justifyContent={"space-around"}>
             <div>
               <Box mb={1}>Text Input</Box>
               <Button
-                onClick={() => setShowSelectedElement(true)}
+                onClick={() =>
+                  setShowSelectedElement({
+                    showElements: true,
+                    Element: "textInput",
+                  })
+                }
                 sx={{
                   height: "100px",
                   width: "100px",
@@ -49,6 +58,12 @@ const SideBarTextInputBtn = () => {
             <div>
               <Box mb={1}> Text Area</Box>
               <Button
+                onClick={() =>
+                  setShowSelectedElement({
+                    showElements: true,
+                    Element: "textAreaInput",
+                  })
+                }
                 sx={{
                   height: "100px",
                   width: "100px",
@@ -79,9 +94,15 @@ const SideBarTextInputBtn = () => {
             </div>
           </Box>
         </Box>
-      ) : (
+      ) : showSelectedElement.showElements &&
+        showSelectedElement.Element === "textInput" ? (
         <SideBarElementsSelectSize
           input={"textInput"}
+          setShowSelectedElement={setShowSelectedElement}
+        />
+      ) : (
+        <SideBarElementsSelectSize
+          input={"textAreaInput"}
           setShowSelectedElement={setShowSelectedElement}
         />
       )}

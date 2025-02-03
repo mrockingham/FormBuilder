@@ -1,3 +1,4 @@
+// Designer.tsx
 import React, { useState } from "react";
 import SideBar from "../sidebar/SideBar";
 import {
@@ -6,18 +7,13 @@ import {
   useDraggable,
   useDroppable,
 } from "@dnd-kit/core";
-import {
-  ElementsType,
-  FormElementInstance,
-  FormElements,
-} from "../FormElements";
+import { FormElementInstance, FormElements } from "../FormElements";
 import useBuilderStore from "../../stores/designBuilderStore";
 import { idGenerator } from "../utils/idGenerator";
 import { Button } from "@mui/material";
 import { BiSolidTrash } from "react-icons/bi";
 import DiagonalLines from "../../img/diagonal-lines.svg";
 
-////May Seperate
 const Designer = () => {
   const {
     elements,
@@ -29,28 +25,34 @@ const Designer = () => {
 
   const droppable = useDroppable({
     id: "dropArea",
-    data: {
-      isDropArea: true,
-    },
+    data: { isDropArea: true },
   });
+
   useDndMonitor({
     onDragEnd: (event: DragEndEvent) => {
       const { active, over } = event;
       if (!active || !over) return;
+      // console.log("event", event);
+
+      console.log("active", active);
+
+      console.log("selectedElement", selectedElement);
 
       const isDesignerBtnElement = active.data.current?.isDesignerBtnElement;
-      const isDroppingOverDesignerDropArea = over.data.current?.isDropArea;
 
+      const isDroppingOverDesignerDropArea = over.data.current?.isDropArea;
       const droppingSidebarBtnOverDesignerDropArea =
         isDesignerBtnElement && isDroppingOverDesignerDropArea;
 
       // First Part: Dropping a new element onto the drop area
       if (droppingSidebarBtnOverDesignerDropArea) {
-        const type = active.data.current?.type;
-        const newElement = FormElements[type as ElementsType].construct(
-          idGenerator()
+        const type: keyof typeof FormElements = active.data.current?.type;
+        // Get size override from the drag data, if available
+        const sizeOverride = active.data.current?.sizeOverride;
+        const newElement = FormElements[type].construct(
+          idGenerator(),
+          sizeOverride
         );
-
         addElement(elements?.length, newElement);
         return;
       }
@@ -59,13 +61,10 @@ const Designer = () => {
 
       const droppingSidebarBtnOverDesignElementTopHalf =
         over.data?.current?.isTopHalfDesignerElement;
-
       const droppingSidebarBtnOverDesignElementBottomHalf =
         over.data?.current?.isBottomHalfDesignerElement;
-
       const droppingSidebarBtnOverDesignElementLeftHalf =
         over.data?.current?.isLeftHalfDesignerElement;
-
       const droppingSidebarBtnOverDesignElementRightHalf =
         over.data?.current?.isRightHalfDesignerElement;
 
@@ -80,22 +79,18 @@ const Designer = () => {
 
       // Second Part: Dropping a new element over an existing element
       if (droppingSidebarBtnOverDesignerElement) {
-        const type = active.data?.current?.type;
-        const newElement = FormElements[type as ElementsType].construct(
-          idGenerator()
+        const type: keyof typeof FormElements = active.data.current?.type;
+        const sizeOverride = active.data.current?.sizeOverride;
+        const newElement = FormElements[type].construct(
+          idGenerator(),
+          sizeOverride
         );
-
         const overId = over.data?.current?.elementId;
-
         const overElementIndex = elements.findIndex(
           (element) => element.id === overId
         );
-        if (overElementIndex === -1) {
-          throw new Error("Element not found");
-        }
-
+        if (overElementIndex === -1) throw new Error("Element not found");
         let indexForNewElement = overElementIndex; // assume top half
-
         if (droppingSidebarBtnOverDesignElementBottomHalf) {
           indexForNewElement = overElementIndex + 1;
         } else if (droppingSidebarBtnOverDesignElementLeftHalf) {
@@ -103,7 +98,6 @@ const Designer = () => {
         } else if (droppingSidebarBtnOverDesignElementRightHalf) {
           indexForNewElement = overElementIndex + 1; // Handle right-side drop
         }
-
         addElement(indexForNewElement, newElement);
         return;
       }
@@ -111,24 +105,20 @@ const Designer = () => {
       // Third Part: Reordering existing elements by dragging over another element
       const draggingDesignerElementOverAnotherDesignerElement =
         isDroppingOverDesignerElement && isDraggingDesignerElement;
-
       if (draggingDesignerElementOverAnotherDesignerElement) {
-        const activeId = active.data?.current?.elementId;
-        const overId = over.data?.current?.elementId;
+        const activeId = active.data.current?.elementId;
+        const overId = over.data.current?.elementId;
         const activeElementIndex = elements.findIndex(
           (element) => element.id === activeId
         );
         const overElementIndex = elements.findIndex(
           (element) => element.id === overId
         );
-        if (activeElementIndex === -1 || overElementIndex === -1) {
+        if (activeElementIndex === -1 || overElementIndex === -1)
           throw new Error("Element not found");
-        }
         const activeElement = { ...elements[activeElementIndex] };
         removeElement(activeId);
-
         let indexForNewElement = overElementIndex; // assume top half
-
         if (droppingSidebarBtnOverDesignElementBottomHalf) {
           indexForNewElement = overElementIndex + 1;
         } else if (droppingSidebarBtnOverDesignElementLeftHalf) {
@@ -136,13 +126,10 @@ const Designer = () => {
         } else if (droppingSidebarBtnOverDesignElementRightHalf) {
           indexForNewElement = overElementIndex + 1; // Handle right-side drop
         }
-
         addElement(indexForNewElement, activeElement);
       }
     },
   });
-
-  console.log("droppable.isOver", droppable.isOver);
 
   return (
     <div
@@ -150,47 +137,31 @@ const Designer = () => {
         maxWidth: "100%",
         display: "flex",
         backgroundColor: "#ECF4E6",
-
-        // backgroundImage: DiagonalLines,
         flexGrow: 1,
       }}
     >
       <SideBar />
       <div
         onClick={() => {
-          if (selectedElement) {
-            setSelectedElement(null);
-          }
+          if (selectedElement) setSelectedElement(null);
         }}
-        style={{
-          padding: "30px",
-          width: "100%",
-
-          display: "flex",
-        }}
+        style={{ padding: "30px", width: "100%", display: "flex" }}
       >
         <div
           ref={droppable.setNodeRef}
           style={{
-            maxWidth: "920px",
+            maxWidth: "1120px",
             height: "100%",
             margin: "auto",
             display: "flex",
             flexDirection: "column",
-
             backgroundColor: "white",
-            // background: "linear-gradient(145deg, #ffffff, #ECF4E6)",
-            // boxShadow: `20px 20px 60px #c6cdc1,
-            // -20px -20px 60px #ffffff`,
             borderRadius: "1rem",
             flexGrow: 1,
             overflowY: "auto",
             overflowX: "hidden",
             border: "1px solid lightgray",
             boxShadow: "0 0 8px gray",
-            // border: droppable.isOver
-            //   ? "4px solid limegreen"
-            //   : "1px solid limegreen",
           }}
         >
           {!droppable.isOver && elements?.length === 0 && (
@@ -202,8 +173,7 @@ const Designer = () => {
                 flexGrow: 1,
                 alignItems: "center",
                 justifyContent: "center",
-                maxWidth: "920px",
-
+                maxWidth: "1120px",
                 backgroundImage: `url(./diagonal-lines.svg)`,
               }}
             >
@@ -221,7 +191,6 @@ const Designer = () => {
                 justifyContent: "flex-start",
                 flexWrap: "wrap",
                 alignItems: "flex-start",
-
                 width: "100%",
                 gap: "20px",
                 padding: "20px",
@@ -238,7 +207,18 @@ const Designer = () => {
   );
 };
 
-/////May Seperate
+// Map your unified size strings to a width percentage
+const widthMap: Record<string, string> = {
+  "1/2": "47%",
+  "1/3": "31.33%",
+  "2/3": "64.66%",
+  "1/4": "23%",
+  "3/4": "73%",
+  "1/6": "13.66%",
+  "5/6": "81.33%",
+  "100%": "100%",
+};
+
 const DesignerElementWrapper = ({
   element,
 }: {
@@ -246,6 +226,8 @@ const DesignerElementWrapper = ({
 }) => {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const { removeElement, setSelectedElement } = useBuilderStore();
+
+  console.log("element", element);
 
   const topHalf = useDroppable({
     id: element.id + "-topHalf",
@@ -273,6 +255,7 @@ const DesignerElementWrapper = ({
       isLeftHalfDesignerElement: true,
     },
   });
+
   const bottomHalf = useDroppable({
     id: element.id + "-bottomHalf",
     data: {
@@ -291,7 +274,14 @@ const DesignerElementWrapper = ({
     },
   });
 
+  // Determine the element’s width using the mapping.
+  const elementWidth = widthMap[element.size as string] || "100%";
+
+  console.log("element.size", element.size);
+
+  // If the element is being dragged, you might choose to render it differently.
   if (draggable.isDragging) return null;
+
   const DesignerElement = FormElements[element.type].designerCompontent;
 
   return (
@@ -304,11 +294,7 @@ const DesignerElementWrapper = ({
         height: "120px",
         border: "1px solid lightgray",
         boxShadow: "0 0 10px lightgray",
-        // border: "2px solid limegreen",
-        // boxShadow: "0 0 10px rgba(0, 255, 0, 0.4)",
-
-        /////////////////////////////// where i need to update width
-        width: element.size === 3 ? "90%" : element.size === 2 ? "47%" : "26%",
+        width: elementWidth,
         display: "flex",
         flexDirection: "column",
         cursor: "pointer",
@@ -319,6 +305,7 @@ const DesignerElementWrapper = ({
       onMouseLeave={() => setMouseIsOver(false)}
       onClick={(e) => {
         e.stopPropagation();
+        console.log("element clicked", element);
         setSelectedElement(element);
       }}
     >
@@ -346,7 +333,7 @@ const DesignerElementWrapper = ({
           position: "absolute",
           width: "100%",
           height: "50%",
-          bottom: "0",
+          bottom: 0,
         }}
       ></div>
 
@@ -359,7 +346,6 @@ const DesignerElementWrapper = ({
                 display: "flex",
                 justifyContent: "center",
                 height: "100%",
-                // backgroundColor: "orange",
               }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -372,7 +358,7 @@ const DesignerElementWrapper = ({
           <div
             style={{
               position: "absolute",
-              top: " 50%",
+              top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
               animation: "pulse 1s infinite",
@@ -387,7 +373,7 @@ const DesignerElementWrapper = ({
         <div
           style={{
             position: "absolute",
-            top: "0",
+            top: 0,
             width: "100%",
             height: "7px",
             backgroundColor: "blue",
@@ -398,7 +384,7 @@ const DesignerElementWrapper = ({
         <div
           style={{
             position: "absolute",
-            right: "0",
+            right: 0,
             height: "100%",
             width: "7px",
             backgroundColor: "red",
@@ -409,7 +395,7 @@ const DesignerElementWrapper = ({
         <div
           style={{
             position: "absolute",
-            left: "0",
+            left: 0,
             height: "100%",
             width: "7px",
             backgroundColor: "red",
@@ -421,10 +407,9 @@ const DesignerElementWrapper = ({
           display: "flex",
           width: "100%",
           height: "120px",
-          padding: "10px",
-          justifyContent: "center",
 
-          backgroundColor: mouseIsOver ? "limegreen" : " #ECF4E6",
+          justifyContent: "center",
+          backgroundColor: mouseIsOver ? "limegreen" : "#ECF4E6",
         }}
       >
         {!mouseIsOver && <DesignerElement elementInstance={element} />}
@@ -433,7 +418,7 @@ const DesignerElementWrapper = ({
         <div
           style={{
             position: "absolute",
-            bottom: "0",
+            bottom: 0,
             width: "100%",
             height: "7px",
             backgroundColor: "blue",
@@ -443,4 +428,5 @@ const DesignerElementWrapper = ({
     </div>
   );
 };
+
 export default Designer;

@@ -5,19 +5,32 @@ import { IoIosCheckboxOutline } from "react-icons/io";
 import SideBarElementsSelectSize from "./SideBarElementsSelectSize";
 
 const SideBarMultiSelectInputBtn = () => {
-  const [showSelectedElement, setShowSelectedElement] = useState(false);
+  const [showSelectedElement, setShowSelectedElement] = useState({
+    showElements: false,
+    Element: "",
+  });
   return (
     <>
-      {!showSelectedElement ? (
+      {!showSelectedElement.showElements ? (
         <Box>
           <Box textAlign={"center"} fontWeight={600} m={2}>
-            Text Input Elements
+            Select Elements
           </Box>
-          <Box mb={2} display="flex" justifyContent={"space-around"}>
+          <Box
+            mb={2}
+            display="flex"
+            justifyContent={"space-around"}
+            flexWrap={"wrap"}
+          >
             <div>
               <Box mb={1}>Check Box</Box>
               <Button
-                onClick={() => setShowSelectedElement(true)}
+                onClick={() =>
+                  setShowSelectedElement({
+                    showElements: true,
+                    Element: "checkboxInput",
+                  })
+                }
                 sx={{
                   height: "100px",
                   width: "100px",
@@ -50,6 +63,12 @@ const SideBarMultiSelectInputBtn = () => {
               <Box mb={1}>Radio Button</Box>
 
               <Button
+                onClick={() =>
+                  setShowSelectedElement({
+                    showElements: true,
+                    Element: "radioInput",
+                  })
+                }
                 sx={{
                   height: "100px",
                   width: "100px",
@@ -80,9 +99,15 @@ const SideBarMultiSelectInputBtn = () => {
             </div>
           </Box>
         </Box>
-      ) : (
+      ) : showSelectedElement.showElements &&
+        showSelectedElement.Element === "checkboxInput" ? (
         <SideBarElementsSelectSize
           input={"checkboxInput"}
+          setShowSelectedElement={setShowSelectedElement}
+        />
+      ) : (
+        <SideBarElementsSelectSize
+          input={"radioInput"}
           setShowSelectedElement={setShowSelectedElement}
         />
       )}

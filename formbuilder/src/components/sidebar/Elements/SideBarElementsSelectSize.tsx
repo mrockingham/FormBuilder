@@ -1,63 +1,137 @@
 import React from "react";
-import { FormElements } from "../../FormElements";
+import { FormElements, InputSize } from "../../FormElements";
 import SidebarBtnElement from "../SidebarBtnElement";
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { CiHome } from "react-icons/ci";
 
-const SideBarElementsSelectSize = (props: any) => {
-  const { input, setShowSelectedElement } = props;
+interface SideBarElementsSelectSizeProps {
+  input: string;
+  setShowSelectedElement: any;
+}
 
+// Define the available sizes for each input type.
+// You can adjust these arrays as needed.
+const textInputSizes: { label: string; size: InputSize }[] = [
+  { label: "XX-S", size: "1/6" },
+  { label: "X-S", size: "1/4" },
+  { label: "S", size: "1/3" },
+  { label: "M", size: "1/2" },
+  { label: "L", size: "2/3" },
+  { label: "X-L", size: "3/4" },
+  { label: "XX-L", size: "5/6" },
+  { label: "Full", size: "100%" },
+];
+const textAreaSizes: { label: string; size: InputSize }[] = [
+  { label: "XX-S", size: "1/6" },
+  { label: "X-S", size: "1/4" },
+  { label: "S", size: "1/3" },
+  { label: "M", size: "1/2" },
+  { label: "L", size: "2/3" },
+  { label: "X-L", size: "3/4" },
+  { label: "XX-L", size: "5/6" },
+  { label: "Full", size: "100%" },
+];
+
+const checkboxSizes: { label: string; size: InputSize }[] = [
+  { label: "XX-S", size: "1/6" },
+  { label: "X-S", size: "1/4" },
+  { label: "S", size: "1/3" },
+  { label: "M", size: "1/2" },
+  { label: "L", size: "2/3" },
+  { label: "X-L", size: "3/4" },
+  { label: "XX-L", size: "5/6" },
+  { label: "Full", size: "100%" },
+];
+
+const SideBarElementsSelectSize: React.FC<SideBarElementsSelectSizeProps> = ({
+  input,
+  setShowSelectedElement,
+}) => {
   const renderElementInputSizeButtons = () => {
     switch (input) {
       case "textInput":
-        return (
-          <>
-            <SidebarBtnElement formElement={FormElements.TextFieldSmall} />
-            <SidebarBtnElement formElement={FormElements.TextFieldMedium} />
-            <SidebarBtnElement formElement={FormElements.TextFieldLarge} />
-          </>
-        );
+        return textInputSizes.map((option) => {
+          return (
+            <SidebarBtnElement
+              key={`text-${option.size}`}
+              formElement={FormElements.TextField}
+              sizeOverride={option.size}
+              labelOverride={option.label}
+            />
+          );
+        });
+      case "textAreaInput":
+        return textInputSizes.map((option) => {
+          return (
+            <SidebarBtnElement
+              key={`text-area-${option.size}`}
+              formElement={FormElements.TextArea}
+              sizeOverride={option.size}
+              labelOverride={option.label}
+            />
+          );
+        });
 
       case "checkboxInput":
-        return (
-          <>
-            <SidebarBtnElement formElement={FormElements.CheckboxSmall} />
-            <SidebarBtnElement formElement={FormElements.CheckboxMedium} />
-            <SidebarBtnElement formElement={FormElements.CheckboxLarge} />
-          </>
-        );
+        return checkboxSizes.map((option) => (
+          <SidebarBtnElement
+            key={`checkbox-${option.size}`}
+            formElement={FormElements.Checkbox}
+            sizeOverride={option.size}
+            labelOverride={option.label}
+          />
+        ));
+      case "radioInput":
+        return checkboxSizes.map((option) => (
+          <SidebarBtnElement
+            key={`radio-${option.size}`}
+            formElement={FormElements.Radio}
+            sizeOverride={option.size}
+            labelOverride={option.label}
+          />
+        ));
+      default:
+        return null;
     }
   };
 
   return (
     <Box display="flex" flexDirection="column">
-      <Divider style={{ marginBottom: "10px" }} />
+      <Divider sx={{ mb: 2 }} />
       <Box
         display="flex"
         justifyContent="space-between"
-        alignItems={"center"}
+        alignItems="center"
         m={2}
       >
         <div>Input Size</div>
-
         <CiHome
-          onClick={() => setShowSelectedElement(false)}
+          onClick={() => {
+            console.log("is clicked");
+            setShowSelectedElement({ showElements: false, Element: "" });
+          }}
           size={20}
           color="limegreen"
           style={{ cursor: "pointer" }}
         />
       </Box>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          paddingBottom: "10px",
-        }}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        m={2}
       >
-        {renderElementInputSizeButtons()}
-      </div>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="flex-start"
+          pb={1}
+          gap={2}
+          flexWrap="wrap"
+        >
+          {renderElementInputSizeButtons()}
+        </Box>
+      </Box>
     </Box>
   );
 };

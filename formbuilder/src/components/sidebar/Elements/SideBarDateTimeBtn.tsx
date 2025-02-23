@@ -1,11 +1,9 @@
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
-import { IoIosRadioButtonOn } from "react-icons/io";
-import { IoIosCheckboxOutline } from "react-icons/io";
-import { MdArrowDropDown } from "react-icons/md";
+import { MdDateRange, MdAccessTime } from "react-icons/md";
 import SideBarElementsSelectSize from "./SideBarElementsSelectSize";
 
-const SideBarMultiSelectInputBtn = () => {
+const SideBarDateTimeBtn = () => {
   const [showSelectedElement, setShowSelectedElement] = useState({
     showElements: false,
     Element: "",
@@ -15,22 +13,17 @@ const SideBarMultiSelectInputBtn = () => {
     <>
       {!showSelectedElement.showElements ? (
         <Box>
-          <Box textAlign={"center"} fontWeight={600} m={2}>
-            Select Elements
+          <Box textAlign="center" fontWeight={600} m={2}>
+            Date & Time Elements
           </Box>
-          <Box
-            mb={2}
-            display="flex"
-            justifyContent={"space-around"}
-            flexWrap={"wrap"}
-          >
+          <Box mb={2} display="flex" justifyContent="space-around">
             <div>
-              <Box mb={1}>Check Box</Box>
+              <Box mb={1}>Date Input</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
                     showElements: true,
-                    Element: "checkboxInput",
+                    Element: "dateInput",
                   })
                 }
                 sx={{
@@ -50,24 +43,24 @@ const SideBarMultiSelectInputBtn = () => {
                   },
                 }}
               >
-                <IoIosCheckboxOutline
+                <MdDateRange
                   style={{
                     border: "1px solid limegreen",
                     width: "60px",
                     boxShadow: `16px 10px 40px #5e625c,
-                              -16px -10px 32px #ffffff`,
+                                -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
             </div>
             <div>
-              <Box mb={1}>Radio Button</Box>
+              <Box mb={1}>Time Input</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
                     showElements: true,
-                    Element: "radioInput",
+                    Element: "timeInput",
                   })
                 }
                 sx={{
@@ -87,49 +80,12 @@ const SideBarMultiSelectInputBtn = () => {
                   },
                 }}
               >
-                <IoIosRadioButtonOn
+                <MdAccessTime
                   style={{
                     border: "1px solid limegreen",
                     width: "60px",
                     boxShadow: `16px 10px 40px #5e625c,
-                              -16px -10px 32px #ffffff`,
-                  }}
-                  size={20}
-                />
-              </Button>
-            </div>
-            <div>
-              <Box mb={1}>Select</Box>
-              <Button
-                onClick={() =>
-                  setShowSelectedElement({
-                    showElements: true,
-                    Element: "selectInput",
-                  })
-                }
-                sx={{
-                  height: "100px",
-                  width: "100px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#ECF4E6",
-                  border: "1px solid lightgray",
-                  boxShadow: "0 0 8px gray",
-                  "&:hover": {
-                    backgroundColor: "#C6E2B5",
-                    boxShadow: "0 0 12px gray",
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                <MdArrowDropDown
-                  style={{
-                    border: "1px solid limegreen",
-                    width: "60px",
-                    boxShadow: `16px 10px 40px #5e625c,
-                              -16px -10px 32px #ffffff`,
+                                -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
@@ -139,21 +95,15 @@ const SideBarMultiSelectInputBtn = () => {
         </Box>
       ) : (
         <>
-          {showSelectedElement.Element === "checkboxInput" && (
+          {showSelectedElement.Element === "dateInput" && (
             <SideBarElementsSelectSize
-              input={"checkboxInput"}
+              input={"dateInput"}
               setShowSelectedElement={setShowSelectedElement}
             />
           )}
-          {showSelectedElement.Element === "radioInput" && (
+          {showSelectedElement.Element === "timeInput" && (
             <SideBarElementsSelectSize
-              input={"radioInput"}
-              setShowSelectedElement={setShowSelectedElement}
-            />
-          )}
-          {showSelectedElement.Element === "selectInput" && (
-            <SideBarElementsSelectSize
-              input={"selectInput"}
+              input={"timeInput"}
               setShowSelectedElement={setShowSelectedElement}
             />
           )}
@@ -163,4 +113,4 @@ const SideBarMultiSelectInputBtn = () => {
   );
 };
 
-export default SideBarMultiSelectInputBtn;
+export default SideBarDateTimeBtn;

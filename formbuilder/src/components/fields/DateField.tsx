@@ -1,4 +1,4 @@
-// fields/TextField.tsx
+// fields/DateField.tsx
 import React, { useEffect } from "react";
 import {
   FormElement,
@@ -6,24 +6,23 @@ import {
   FormElementKey,
   InputSize,
 } from "../FormElements";
-import { MdTextFields } from "react-icons/md";
-import { TextField, FormControl, Switch, Box } from "@mui/material";
+import { MdDateRange } from "react-icons/md";
+import { TextField, FormControl, Switch } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import useBuilderStore from "../../stores/designBuilderStore";
 import { capitalizeFirstLetter } from "../utils/utils";
 
-// Use one key for TextField.
-const type: FormElementKey = "TextField";
+// Use one key for DateField.
+const type: FormElementKey = "Date";
 
-// Define the extra attributes for a TextField.
-export type TextFieldExtraAttr = {
+// Define the extra attributes for a DateField.
+export type DateFieldExtraAttr = {
   label: string;
   required: boolean;
   name: string;
-  placeholder: string;
 };
 
-type CustomInstance = FormElementInstance<TextFieldExtraAttr>;
+type CustomInstance = FormElementInstance<DateFieldExtraAttr>;
 
 interface PropertiesFormData {
   label: string;
@@ -112,12 +111,13 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
 }) => {
   return (
     <div style={{ width: "100%" }}>
-      <div>{elementInstance.extraAttr.label}</div>
       <TextField
+        type="date"
         size="small"
         fullWidth
-        label={capitalizeFirstLetter(elementInstance.extraAttr.placeholder)}
+        label={capitalizeFirstLetter(elementInstance.extraAttr.label)}
         required={elementInstance.extraAttr.required}
+        InputLabelProps={{ shrink: true }}
       />
     </div>
   );
@@ -129,44 +129,37 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   return (
     <div
       style={{
-        width: "100%",
-        // padding: "5px",
-        // marginTop: "10px",
-        backgroundColor: "white",
+        width: "70%",
+        display: "flex",
+        alignItems: "center",
       }}
     >
-      <Box gap={"5px"} display={"flex"} flexDirection={"column"}>
-        <div>{elementInstance.extraAttr.label || "Label"}</div>
-
-        <TextField
-          style={{ borderColor: "limegreen" }}
-          size="small"
-          fullWidth
-          variant="outlined"
-          label={capitalizeFirstLetter(
-            elementInstance.extraAttr.placeholder || "Placeholder..."
-          )}
-          required={elementInstance.extraAttr.required}
-        />
-      </Box>
+      <TextField
+        type="date"
+        size="small"
+        fullWidth
+        variant="outlined"
+        label={capitalizeFirstLetter(elementInstance.extraAttr.label)}
+        required={elementInstance.extraAttr.required}
+        InputLabelProps={{ shrink: true }}
+      />
     </div>
   );
 };
 
-export const TextFieldFormElement: FormElement<TextFieldExtraAttr> = {
+export const DateFieldFormElement: FormElement<DateFieldExtraAttr> = {
   type,
   construct: (id: string, sizeOverride?: InputSize) => ({
     id,
     type,
-    size: sizeOverride || "100%", // default size if no override is provided
+    size: sizeOverride || "100%",
     extraAttr: {
-      label: "Text Field",
-      placeholder: "Placeholder",
+      label: "Date Field",
       required: false,
-      name: "text-field",
+      name: "date-field",
     },
   }),
-  designerBtnElement: { icon: MdTextFields, label: "TextField" },
+  designerBtnElement: { icon: MdDateRange, label: "DateField" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,

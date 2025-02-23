@@ -1,4 +1,4 @@
-// fields/TextField.tsx
+// fields/SelectField.tsx
 import React, { useEffect } from "react";
 import {
   FormElement,
@@ -6,29 +6,37 @@ import {
   FormElementKey,
   InputSize,
 } from "../FormElements";
-import { MdTextFields } from "react-icons/md";
-import { TextField, FormControl, Switch, Box } from "@mui/material";
+import { MdArrowDropDown } from "react-icons/md";
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Switch,
+  TextField,
+} from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import useBuilderStore from "../../stores/designBuilderStore";
 import { capitalizeFirstLetter } from "../utils/utils";
 
-// Use one key for TextField.
-const type: FormElementKey = "TextField";
+// Use one key for SelectField.
+const type: FormElementKey = "Select";
 
-// Define the extra attributes for a TextField.
-export type TextFieldExtraAttr = {
+// Define the extra attributes for a SelectField.
+export type SelectFieldExtraAttr = {
   label: string;
   required: boolean;
   name: string;
-  placeholder: string;
+  options: string; // Comma separated list e.g. "Option 1, Option 2, Option 3"
 };
 
-type CustomInstance = FormElementInstance<TextFieldExtraAttr>;
+type CustomInstance = FormElementInstance<SelectFieldExtraAttr>;
 
 interface PropertiesFormData {
   label: string;
   name: string;
   required: boolean;
+  options: string;
 }
 
 const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
@@ -42,6 +50,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       label: elementInstance.extraAttr.label,
       name: elementInstance.extraAttr.name,
       required: elementInstance.extraAttr.required,
+      options: elementInstance.extraAttr.options,
     },
   });
 
@@ -56,6 +65,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         label: values.label,
         name: values.name,
         required: values.required,
+        options: values.options,
       },
     });
   };
@@ -93,6 +103,19 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       />
       <Controller
         control={form.control}
+        name="options"
+        render={({ field }) => (
+          <TextField
+            label="Options (comma separated)"
+            {...field}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.currentTarget.blur();
+            }}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
         name="required"
         render={({ field }) => (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -110,63 +133,81 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
 const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
+  // Split the comma-separated options into an array.
+  const optionsArray = elementInstance.extraAttr.options
+    .split(",")
+    .map((opt) => opt.trim())
+    .filter((opt) => opt !== "");
+
   return (
-    <div style={{ width: "100%" }}>
-      <div>{elementInstance.extraAttr.label}</div>
-      <TextField
-        size="small"
-        fullWidth
-        label={capitalizeFirstLetter(elementInstance.extraAttr.placeholder)}
-        required={elementInstance.extraAttr.required}
-      />
-    </div>
+    <FormControl
+      fullWidth
+      required={elementInstance.extraAttr.required}
+      size="small"
+    >
+      <InputLabel>
+        {capitalizeFirstLetter(elementInstance.extraAttr.label)}
+      </InputLabel>
+      <Select label={capitalizeFirstLetter(elementInstance.extraAttr.label)}>
+        {optionsArray.map((option, index) => (
+          <MenuItem key={index} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 
 const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
-  return (
-    <div
-      style={{
-        width: "100%",
-        // padding: "5px",
-        // marginTop: "10px",
-        backgroundColor: "white",
-      }}
-    >
-      <Box gap={"5px"} display={"flex"} flexDirection={"column"}>
-        <div>{elementInstance.extraAttr.label || "Label"}</div>
+  // Provide a preview of the select field in the designer.
+  const optionsArray = elementInstance.extraAttr.options
+    .split(",")
+    .map((opt) => opt.trim())
+    .filter((opt) => opt !== "");
 
-        <TextField
-          style={{ borderColor: "limegreen" }}
-          size="small"
-          fullWidth
-          variant="outlined"
-          label={capitalizeFirstLetter(
-            elementInstance.extraAttr.placeholder || "Placeholder..."
-          )}
-          required={elementInstance.extraAttr.required}
-        />
-      </Box>
-    </div>
+  return (
+    <FormControl
+      fullWidth
+      required={elementInstance.extraAttr.required}
+      size="small"
+    >
+      <InputLabel>
+        {capitalizeFirstLetter(elementInstance.extraAttr.label)}
+      </InputLabel>
+      <Select label={capitalizeFirstLetter(elementInstance.extraAttr.label)}>
+        {optionsArray.length > 0 ? (
+          optionsArray.map((option, index) => (
+            <MenuItem key={index} value={option}>
+              {option}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem value="">
+            <em>No options</em>
+          </MenuItem>
+        )}
+      </Select>
+    </FormControl>
   );
 };
 
-export const TextFieldFormElement: FormElement<TextFieldExtraAttr> = {
+export const SelectFieldFormElement: FormElement<SelectFieldExtraAttr> = {
   type,
   construct: (id: string, sizeOverride?: InputSize) => ({
     id,
     type,
-    size: sizeOverride || "100%", // default size if no override is provided
+    size: sizeOverride || "100%",
     extraAttr: {
-      label: "Text Field",
-      placeholder: "Placeholder",
+      label: "Select Field",
       required: false,
-      name: "text-field",
+      name: "select-field",
+      options: "Option 1, Option 2, Option 3",
     },
   }),
-  designerBtnElement: { icon: MdTextFields, label: "TextField" },
+  designerBtnElement: { icon: MdArrowDropDown, label: "SelectField" },
   designerCompontent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,

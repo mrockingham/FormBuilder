@@ -14,6 +14,7 @@ import {
 import SideBarTextInputBtn from "./Elements/SideBarTextInputBtn";
 
 import SideBarMultiSelectInputBtn from "./Elements/SideBarMultiSelectInputBtn";
+import SideBarDateTimeBtn from "./Elements/SideBarDateTimeBtn";
 
 const FormElementsSidebar = () => {
   return (
@@ -32,6 +33,7 @@ const FormElementsSidebar = () => {
       <Divider style={{ marginBottom: "10px" }} />
       <SideBarTextInputBtn />
       <SideBarMultiSelectInputBtn />
+      <SideBarDateTimeBtn />
 
       {/* <Accordion>
         <AccordionSummary

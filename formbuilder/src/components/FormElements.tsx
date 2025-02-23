@@ -5,17 +5,20 @@ import React from "react";
 import { TextFieldFormElement } from "./fields/TextField";
 import { CheckboxFormElement } from "./fields/CheckBox";
 import { TextAreaFormElement } from "./fields/TextAreaField";
-// import { MultiSelectFormElement } from "./fields/MultiSelect";
+import { SelectFieldFormElement } from "./fields/SelectField";
 import { RadioFormElement } from "./fields/RadioButton";
-// import { DateFormElement } from "./fields/Date";
-// import { TimeFormElement } from "./fields/Time";
+import { DateFieldFormElement } from "./fields/DateField";
+import { TimeFieldFormElement } from "./fields/TimeField";
 
 // Use one key per input type.
-export type FormElementKey = "TextField" | "Checkbox" | "TextArea" | "Radio";
-// | "MultiSelect"
-// | "Radio"
-// | "Date"
-// | "Time";
+export type FormElementKey =
+  | "TextField"
+  | "Checkbox"
+  | "TextArea"
+  | "Radio"
+  | "Date"
+  | "Time"
+  | "Select";
 
 // Define a unified sizing type.
 export type InputSize =
@@ -66,8 +69,10 @@ export const FormElements: FormElementsType = {
   TextField: TextFieldFormElement,
   Checkbox: CheckboxFormElement,
   TextArea: TextAreaFormElement,
-  // MultiSelect: MultiSelectFormElement,
   Radio: RadioFormElement,
-  // Date: DateFormElement,
-  // Time: TimeFormElement,
+  Date: DateFieldFormElement,
+  Time: TimeFieldFormElement,
+  Select: SelectFieldFormElement,
+
+  // Select:SelectFormElement,
 };

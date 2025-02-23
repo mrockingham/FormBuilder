@@ -162,6 +162,7 @@ const Designer = () => {
             overflowX: "hidden",
             border: "1px solid lightgray",
             boxShadow: "0 0 8px gray",
+            paddingRight: "10px",
           }}
         >
           {!droppable.isOver && elements?.length === 0 && (
@@ -191,7 +192,7 @@ const Designer = () => {
                 justifyContent: "flex-start",
                 flexWrap: "wrap",
                 alignItems: "flex-start",
-                width: "100%",
+                maxWidth: "1120px",
                 gap: "20px",
                 padding: "20px",
               }}
@@ -291,9 +292,11 @@ const DesignerElementWrapper = ({
       {...draggable.attributes}
       style={{
         position: "relative",
-        height: "120px",
+        height: "100px",
         border: "1px solid lightgray",
         boxShadow: "0 0 10px lightgray",
+        backgroundColor: "transparent",
+        padding: "10px",
         width: elementWidth,
         display: "flex",
         flexDirection: "column",

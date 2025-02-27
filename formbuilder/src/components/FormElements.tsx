@@ -9,6 +9,8 @@ import { SelectFieldFormElement } from "./fields/SelectField";
 import { RadioFormElement } from "./fields/RadioButton";
 import { DateFieldFormElement } from "./fields/DateField";
 import { TimeFieldFormElement } from "./fields/TimeField";
+import { ImageUploaderFormElement } from "./fields/ImageUploader";
+import { VideoUploaderFormElement } from "./fields/VideoUploader";
 
 // Use one key per input type.
 export type FormElementKey =
@@ -18,7 +20,9 @@ export type FormElementKey =
   | "Radio"
   | "Date"
   | "Time"
-  | "Select";
+  | "Select"
+  | "Image"
+  | "Video";
 
 // Define a unified sizing type.
 export type InputSize =
@@ -73,6 +77,8 @@ export const FormElements: FormElementsType = {
   Date: DateFieldFormElement,
   Time: TimeFieldFormElement,
   Select: SelectFieldFormElement,
+  Image: ImageUploaderFormElement,
+  Video: VideoUploaderFormElement,
 
   // Select:SelectFormElement,
 };

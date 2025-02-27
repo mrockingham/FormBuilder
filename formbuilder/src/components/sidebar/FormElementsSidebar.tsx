@@ -15,6 +15,7 @@ import SideBarTextInputBtn from "./Elements/SideBarTextInputBtn";
 
 import SideBarMultiSelectInputBtn from "./Elements/SideBarMultiSelectInputBtn";
 import SideBarDateTimeBtn from "./Elements/SideBarDateTimeBtn";
+import SideBarImageInputBtn from "./Elements/SideBarImageInputBtn";
 
 const FormElementsSidebar = () => {
   return (
@@ -34,6 +35,7 @@ const FormElementsSidebar = () => {
       <SideBarTextInputBtn />
       <SideBarMultiSelectInputBtn />
       <SideBarDateTimeBtn />
+      <SideBarImageInputBtn />
 
       {/* <Accordion>
         <AccordionSummary

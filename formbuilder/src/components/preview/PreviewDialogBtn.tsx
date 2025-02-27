@@ -80,16 +80,16 @@ const PreviewDialogBtn = () => {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "1rem", // gap-4 corresponds to 1rem (default Tailwind spacing)
+                  gap: "1rem",
                   flexGrow: 1,
                   //   height: "100%",
                   width: "100%",
-                  borderRadius: "1.5rem", // rounded-3xl is equivalent to 1.5rem
-                  padding: "2rem", // p-8 corresponds to 2rem
+                  borderRadius: "1.5rem",
+                  padding: "2rem",
                   overflowY: "auto",
                   backgroundColor: "white",
-                  transform: "scale(0.8)", // Scale everything down to 70% (30% smaller)
-                  transformOrigin: "top left", // Scale from the top-left corner
+                  transform: "scale(0.8)",
+                  transformOrigin: "top left",
                 }}
               >
                 {elements.map((element) => {
@@ -100,9 +100,9 @@ const PreviewDialogBtn = () => {
                       key={element?.id}
                       style={{
                         width:
-                          element?.size === 3
+                          element?.size === "1/6"
                             ? "100%"
-                            : element?.size === 2
+                            : element?.size === "1/4"
                             ? "45%"
                             : "24%",
                         padding: "20px",

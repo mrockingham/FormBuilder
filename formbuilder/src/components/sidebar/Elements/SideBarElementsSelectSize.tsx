@@ -102,6 +102,24 @@ const SideBarElementsSelectSize: React.FC<SideBarElementsSelectSizeProps> = ({
             labelOverride={option.label}
           />
         ));
+      case "imageInput":
+        return textInputSizes.map((option) => (
+          <SidebarBtnElement
+            key={`image-${option.size}`}
+            formElement={FormElements.Image}
+            sizeOverride={option.size}
+            labelOverride={option.label}
+          />
+        ));
+      case "videoInput":
+        return textInputSizes.map((option) => (
+          <SidebarBtnElement
+            key={`video-${option.size}`}
+            formElement={FormElements.Video}
+            sizeOverride={option.size}
+            labelOverride={option.label}
+          />
+        ));
       default:
         return null;
     }

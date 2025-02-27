@@ -7,12 +7,10 @@ const SaveFormBtn = () => {
 
   const updateFormContent = async () => {
     try {
-      console.log(elements);
       const JsonElements = JSON.stringify(elements);
     } catch (error) {}
   };
 
-  console.log("elements", elements);
   return <Button onClick={updateFormContent}>SaveFormBtn</Button>;
 };
 

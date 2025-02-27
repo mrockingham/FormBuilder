@@ -63,8 +63,8 @@ const LandingPage: React.FC = () => {
   const handleSelectForm = (form: any) => {
     setCurrentForm(form);
     setElements(form.elements);
-    console.log(form);
-    navigate(`/builder/new`);
+
+    navigate(`/builder/${form.id}`);
   };
 
   const onSubmit = (data: FormData) => {

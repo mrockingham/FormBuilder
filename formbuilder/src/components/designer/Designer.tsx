@@ -12,7 +12,6 @@ import useBuilderStore from "../../stores/designBuilderStore";
 import { idGenerator } from "../utils/idGenerator";
 import { Button } from "@mui/material";
 import { BiSolidTrash } from "react-icons/bi";
-import DiagonalLines from "../../img/diagonal-lines.svg";
 
 const Designer = () => {
   const {
@@ -32,11 +31,6 @@ const Designer = () => {
     onDragEnd: (event: DragEndEvent) => {
       const { active, over } = event;
       if (!active || !over) return;
-      // console.log("event", event);
-
-      console.log("active", active);
-
-      console.log("selectedElement", selectedElement);
 
       const isDesignerBtnElement = active.data.current?.isDesignerBtnElement;
 
@@ -228,8 +222,6 @@ const DesignerElementWrapper = ({
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const { removeElement, setSelectedElement } = useBuilderStore();
 
-  console.log("element", element);
-
   const topHalf = useDroppable({
     id: element.id + "-topHalf",
     data: {
@@ -278,8 +270,6 @@ const DesignerElementWrapper = ({
   // Determine the element’s width using the mapping.
   const elementWidth = widthMap[element.size as string] || "100%";
 
-  console.log("element.size", element.size);
-
   // If the element is being dragged, you might choose to render it differently.
   if (draggable.isDragging) return null;
 
@@ -308,7 +298,7 @@ const DesignerElementWrapper = ({
       onMouseLeave={() => setMouseIsOver(false)}
       onClick={(e) => {
         e.stopPropagation();
-        console.log("element clicked", element);
+
         setSelectedElement(element);
       }}
     >

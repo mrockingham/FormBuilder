@@ -14,20 +14,24 @@ import {
   FormControl,
   Switch,
   TextField,
+  Button,
+  IconButton,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useFieldArray } from "react-hook-form";
 import useBuilderStore from "../../stores/designBuilderStore";
 import { capitalizeFirstLetter } from "../utils/utils";
+import { MdDelete } from "react-icons/md";
 
 // Use one key for SelectField.
 const type: FormElementKey = "Select";
 
 // Define the extra attributes for a SelectField.
+// 'options' is now an object array with id and label.
 export type SelectFieldExtraAttr = {
   label: string;
   required: boolean;
   name: string;
-  options: string; // Comma separated list e.g. "Option 1, Option 2, Option 3"
+  options: { id: string; label: string }[];
 };
 
 type CustomInstance = FormElementInstance<SelectFieldExtraAttr>;
@@ -36,7 +40,7 @@ interface PropertiesFormData {
   label: string;
   name: string;
   required: boolean;
-  options: string;
+  options: { id: string; label: string }[];
 }
 
 const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
@@ -54,8 +58,19 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
     },
   });
 
+  // Manage the dynamic array of select options.
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "options",
+  });
+
   useEffect(() => {
-    form.reset(elementInstance.extraAttr);
+    form.reset({
+      label: elementInstance.extraAttr.label,
+      name: elementInstance.extraAttr.name,
+      required: elementInstance.extraAttr.required,
+      options: elementInstance.extraAttr.options,
+    });
   }, [elementInstance, form]);
 
   const applyChanges = (values: PropertiesFormData) => {
@@ -74,6 +89,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
     <form
       onBlur={form.handleSubmit(applyChanges)}
       onSubmit={(e) => e.preventDefault()}
+      style={{ display: "flex", flexDirection: "column", gap: "20px" }}
     >
       <Controller
         control={form.control}
@@ -101,19 +117,54 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
           />
         )}
       />
-      <Controller
-        control={form.control}
-        name="options"
-        render={({ field }) => (
-          <TextField
-            label="Options (comma separated)"
-            {...field}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") e.currentTarget.blur();
+      <div>
+        <h4>Select Options</h4>
+        {fields.map((item, index) => (
+          <div
+            key={item.id}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "8px",
             }}
-          />
-        )}
-      />
+          >
+            <Controller
+              control={form.control}
+              name={`options.${index}.label`}
+              defaultValue={item.label}
+              render={({ field }) => (
+                <TextField
+                  label={`Option ${index + 1}`}
+                  {...field}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") e.currentTarget.blur();
+                  }}
+                />
+              )}
+            />
+            <IconButton
+              onClick={() => {
+                remove(index);
+                form.handleSubmit(applyChanges)();
+              }}
+            >
+              <MdDelete />
+            </IconButton>
+          </div>
+        ))}
+        <Button
+          variant="outlined"
+          onClick={() =>
+            append({
+              id: new Date().getTime().toString(),
+              label: `Option ${fields.length + 1}`,
+            })
+          }
+        >
+          Add Option
+        </Button>
+      </div>
       <Controller
         control={form.control}
         name="required"
@@ -133,12 +184,6 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
 const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
-  // Split the comma-separated options into an array.
-  const optionsArray = elementInstance.extraAttr.options
-    .split(",")
-    .map((opt) => opt.trim())
-    .filter((opt) => opt !== "");
-
   return (
     <FormControl
       fullWidth
@@ -149,11 +194,17 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         {capitalizeFirstLetter(elementInstance.extraAttr.label)}
       </InputLabel>
       <Select label={capitalizeFirstLetter(elementInstance.extraAttr.label)}>
-        {optionsArray.map((option, index) => (
-          <MenuItem key={index} value={option}>
-            {option}
+        {elementInstance.extraAttr.options.length > 0 ? (
+          elementInstance.extraAttr.options.map((option) => (
+            <MenuItem key={option.id} value={option.label}>
+              {option.label}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem value="">
+            <em>No options</em>
           </MenuItem>
-        ))}
+        )}
       </Select>
     </FormControl>
   );
@@ -162,12 +213,6 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
 const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
-  // Provide a preview of the select field in the designer.
-  const optionsArray = elementInstance.extraAttr.options
-    .split(",")
-    .map((opt) => opt.trim())
-    .filter((opt) => opt !== "");
-
   return (
     <FormControl
       fullWidth
@@ -178,10 +223,10 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         {capitalizeFirstLetter(elementInstance.extraAttr.label)}
       </InputLabel>
       <Select label={capitalizeFirstLetter(elementInstance.extraAttr.label)}>
-        {optionsArray.length > 0 ? (
-          optionsArray.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
+        {elementInstance.extraAttr.options.length > 0 ? (
+          elementInstance.extraAttr.options.map((option) => (
+            <MenuItem key={option.id} value={option.label}>
+              {option.label}
             </MenuItem>
           ))
         ) : (
@@ -204,7 +249,11 @@ export const SelectFieldFormElement: FormElement<SelectFieldExtraAttr> = {
       label: "Select Field",
       required: false,
       name: "select-field",
-      options: "Option 1, Option 2, Option 3",
+      options: [
+        { id: "option-1", label: "Option 1" },
+        { id: "option-2", label: "Option 2" },
+        { id: "option-3", label: "Option 3" },
+      ],
     },
   }),
   designerBtnElement: { icon: MdArrowDropDown, label: "SelectField" },

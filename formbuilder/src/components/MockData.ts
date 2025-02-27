@@ -6,60 +6,60 @@ export const mockData = [
     elements: [
       {
         id: "101067",
-        type: "TextFieldSmall",
-        size: 1,
+        type: "TextField",
+        size: "1/6",
         extraAttr: {
-          label: "Text FieldSmall",
+          label: "XX-S",
           required: false,
           name: "text-fieldSmall",
         },
       },
       {
         id: "947843",
-        type: "TextFieldSmall",
-        size: 1,
+        type: "TextField",
+        size: "1/4",
         extraAttr: {
-          label: "Text FieldSmall",
+          label: "X-S",
           required: false,
           name: "text-fieldSmall",
         },
       },
       {
         id: "798742",
-        type: "TextFieldSmall",
-        size: 1,
+        type: "TextField",
+        size: "1/3",
         extraAttr: {
-          label: "Text FieldSmall",
+          label: "S",
           required: false,
           name: "text-fieldSmall",
         },
       },
       {
         id: "420930",
-        type: "TextFieldMedium",
-        size: 2,
+        type: "TextField",
+        size: "2/3",
         extraAttr: {
-          label: "Text Field Medium",
+          label: "L",
           required: false,
           name: "text-field Medium",
         },
       },
       {
         id: "698274",
-        type: "TextFieldSmall",
-        size: 1,
+        type: "TextField",
+        size: "3/4",
         extraAttr: {
-          label: "Text FieldSmall",
+          label: "X-L",
           required: false,
           name: "text-fieldSmall",
         },
       },
       {
         id: "899833",
-        type: "CheckboxLarge",
-        size: 3,
+        type: "Checkbox",
+        size: "1/2",
         extraAttr: {
-          label: "checkBox Small",
+          label: "M",
           required: false,
           name: "CheckBox Small",
         },
@@ -74,7 +74,7 @@ export const mockData = [
       // New Array 2
       {
         id: "781239",
-        type: "TextFieldSmall",
+        type: "TextFieldl",
         size: 3,
         extraAttr: {
           label: "Large Text Area",
@@ -84,7 +84,7 @@ export const mockData = [
       },
       {
         id: "125489",
-        type: "TextFieldSmall",
+        type: "TextField",
         size: 1,
         extraAttr: {
           label: "Short Answer",
@@ -94,7 +94,7 @@ export const mockData = [
       },
       {
         id: "458923",
-        type: "TextFieldMedium",
+        type: "TextField",
         size: 2,
         extraAttr: {
           label: "Medium Text Field",

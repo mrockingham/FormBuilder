@@ -19,12 +19,14 @@ interface SidebarBtnElementProps {
   formElement: FormElement<any>;
   sizeOverride?: InputSize;
   labelOverride?: string;
+  disableDrag?: boolean;
 }
 
 const SidebarBtnElement: React.FC<SidebarBtnElementProps> = ({
   formElement,
   sizeOverride,
   labelOverride,
+  disableDrag,
 }) => {
   const draggable = useDraggable({
     id: `designer-btn-${formElement.type}-${sizeOverride || "default"}`,

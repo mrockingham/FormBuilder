@@ -15,7 +15,7 @@ import { Box } from "@mui/material";
 import SaveFormBtn from "../components/designer/SaveFormBtn";
 import { useNavigate, useParams } from "react-router-dom";
 import { mockData } from "../components/MockData";
-import { set } from "react-hook-form";
+
 import { FormElementInstance } from "../components/FormElements";
 const FormBuilder = () => {
   const navigate = useNavigate();
@@ -34,14 +34,12 @@ const FormBuilder = () => {
       tolerance: 5,
     },
   });
-  console.log("params", params);
-  console.log("elements", elements);
-  console.log("currentForm", currentForm);
 
   const sensors = useSensors(mouseSensor, touchSensor);
   useEffect(() => {
     if (!currentForm && params.id) {
       const form = mockData.find((f) => f.id === params.id);
+
       if (form) {
         setCurrentForm(form);
         setElements(form?.elements as FormElementInstance[]);

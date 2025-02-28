@@ -4,6 +4,7 @@ import {
   FormElement,
   FormElementInstance,
   FormElementKey,
+  InputSize,
 } from "../FormElements";
 import { IoIosCheckboxOutline } from "react-icons/io";
 import {
@@ -240,16 +241,18 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
 // The construct function now sets up a default checkbox group with one option.
 export const CheckboxFormElement: FormElement<CheckboxExtraAttr> = {
   type,
-  construct: (id: string) => ({
+  construct: (id: string, sizeOverride?: InputSize) => ({
     id,
     type,
-    size: "1/2", // default size; can be adjusted later
+    size: sizeOverride || "1/2",
     extraAttr: {
       label: "Checkbox Group",
       required: false,
       name: "Checkbox",
       items: [{ id: "option-1", label: "Option 1" }],
     },
+    formComponent: FormComponent,
+    designerCompontent: DesignerComponent,
   }),
   designerBtnElement: { icon: IoIosCheckboxOutline, label: "Checkbox" },
   designerCompontent: DesignerComponent,

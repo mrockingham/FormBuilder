@@ -37,6 +37,8 @@ export type InputSize =
 
 // Generic instance type.
 export type FormElementInstance<TExtra = {}> = {
+  formComponent: any;
+  designerCompontent: any;
   id: string;
   type: FormElementKey;
   size: InputSize;

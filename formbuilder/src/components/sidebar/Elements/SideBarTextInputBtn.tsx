@@ -14,12 +14,23 @@ const SideBarTextInputBtn = () => {
     <>
       {!showSelectedElement.showElements ? (
         <Box>
-          <Box textAlign={"center"} fontWeight={600} m={2}>
+          <Box fontWeight={600} m={2}>
             Input Elements
           </Box>
-          <Box mb={2} display="flex" justifyContent={"space-around"}>
-            <div>
-              <Box mb={1}>Text Input</Box>
+          <Box
+            mb={2}
+            ml={2}
+            display="flex"
+            gap={3}
+            justifyContent={"flex-start"}
+            flexWrap={"wrap"}
+          >
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Box mb={1}>Text</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
@@ -28,8 +39,8 @@ const SideBarTextInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -47,16 +58,20 @@ const SideBarTextInputBtn = () => {
                 <MdPowerInput
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                     -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
-            <div>
-              <Box mb={1}> Text Area</Box>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Box mb={1}> Area</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
@@ -65,8 +80,8 @@ const SideBarTextInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -84,14 +99,14 @@ const SideBarTextInputBtn = () => {
                 <CiTextAlignJustify
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 45px #5e625c,
                     -16px -10px 45px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
+            </Box>
           </Box>
         </Box>
       ) : showSelectedElement.showElements &&

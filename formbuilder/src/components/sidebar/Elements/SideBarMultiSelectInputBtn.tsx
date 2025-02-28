@@ -15,17 +15,23 @@ const SideBarMultiSelectInputBtn = () => {
     <>
       {!showSelectedElement.showElements ? (
         <Box>
-          <Box textAlign={"center"} fontWeight={600} m={2}>
+          <Box fontWeight={600} m={2}>
             Select Elements
           </Box>
           <Box
             mb={2}
+            ml={2}
             display="flex"
-            justifyContent={"space-around"}
+            gap={3}
             flexWrap={"wrap"}
+            justifyContent={"flex-start"}
           >
-            <div>
-              <Box mb={1}>Check Box</Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Box mb={1}>Check</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
@@ -34,8 +40,8 @@ const SideBarMultiSelectInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -53,16 +59,20 @@ const SideBarMultiSelectInputBtn = () => {
                 <IoIosCheckboxOutline
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                               -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
-            <div>
-              <Box mb={1}>Radio Button</Box>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Box mb={1}>Radio</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
@@ -71,8 +81,8 @@ const SideBarMultiSelectInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -90,15 +100,19 @@ const SideBarMultiSelectInputBtn = () => {
                 <IoIosRadioButtonOn
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                               -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
-            <div>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
               <Box mb={1}>Select</Box>
               <Button
                 onClick={() =>
@@ -108,8 +122,8 @@ const SideBarMultiSelectInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -127,14 +141,14 @@ const SideBarMultiSelectInputBtn = () => {
                 <MdArrowDropDown
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                               -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
+            </Box>
           </Box>
         </Box>
       ) : (

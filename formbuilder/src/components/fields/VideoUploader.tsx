@@ -215,13 +215,15 @@ export const VideoUploaderFormElement: FormElement<VideoUploaderExtraAttr> = {
   construct: (id: string, sizeOverride?: InputSize) => ({
     id,
     type,
-    size: sizeOverride || "100%",
+    size: sizeOverride || "1/2",
     extraAttr: {
       label: "Video Uploader",
       required: false,
-      name: "video-uploader",
-      videoUrl: "",
+      name: "Video Uploader",
+      videoUrl: "", // Add this property
     },
+    formComponent: FormComponent,
+    designerCompontent: DesignerComponent,
   }),
   designerBtnElement: { icon: MdVideocam, label: "Video" },
   designerCompontent: DesignerComponent,

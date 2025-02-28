@@ -14,12 +14,24 @@ const SideBarImageInputBtn = () => {
     <>
       {!showSelectedElement.showElements ? (
         <Box>
-          <Box textAlign="center" fontWeight={600} m={2}>
+          <Box fontWeight={600} m={2}>
             Multmed Elements
           </Box>
-          <Box mb={2} display="flex" justifyContent="space-around">
-            <div>
-              <Box mb={1}>Image Uploader</Box>
+
+          <Box
+            mb={2}
+            ml={2}
+            gap={3}
+            display="flex"
+            justifyContent="flex-start"
+            flexWrap={"wrap"}
+          >
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Box mb={1}>Image</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
@@ -28,8 +40,8 @@ const SideBarImageInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -47,16 +59,20 @@ const SideBarImageInputBtn = () => {
                 <MdImage
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                                 -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
-            <div>
-              <Box mb={1}>Video Uploader</Box>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Box mb={1}>Video</Box>
               <Button
                 onClick={() =>
                   setShowSelectedElement({
@@ -65,8 +81,8 @@ const SideBarImageInputBtn = () => {
                   })
                 }
                 sx={{
-                  height: "100px",
-                  width: "100px",
+                  height: "50px",
+                  width: "50px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -84,14 +100,14 @@ const SideBarImageInputBtn = () => {
                 <MdOndemandVideo
                   style={{
                     border: "1px solid limegreen",
-                    width: "60px",
+                    width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                                 -16px -10px 32px #ffffff`,
                   }}
                   size={20}
                 />
               </Button>
-            </div>
+            </Box>
           </Box>
         </Box>
       ) : (

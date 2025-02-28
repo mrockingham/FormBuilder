@@ -4,6 +4,7 @@ import {
   FormElement,
   FormElementInstance,
   FormElementKey,
+  InputSize,
 } from "../FormElements";
 import { MdSubject } from "react-icons/md";
 import { Checkbox, TextField } from "@mui/material";
@@ -131,15 +132,17 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
 
 export const TextAreaFormElement: FormElement<TextAreaExtraAttr> = {
   type,
-  construct: (id: string) => ({
+  construct: (id: string, sizeOverride?: InputSize) => ({
     id,
     type,
-    size: "1/2",
+    size: sizeOverride || "1/2",
     extraAttr: {
       label: "Text Area",
       required: false,
       name: "text-area",
     },
+    formComponent: FormComponent,
+    designerCompontent: DesignerComponent,
   }),
   designerBtnElement: { icon: MdSubject, label: "TextArea" },
   designerCompontent: DesignerComponent,

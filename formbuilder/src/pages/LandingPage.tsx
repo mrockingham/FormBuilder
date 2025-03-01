@@ -19,6 +19,7 @@ import useFormStore from "../stores/formStore";
 import useBuilderStore from "../stores/designBuilderStore";
 import { v4 as uuidv4 } from "uuid"; // For generating unique IDs
 import { mockData } from "../components/MockData";
+import ViewAllForms from "../components/viewForms/ViewAllForms";
 
 interface FormData {
   name: string;
@@ -124,31 +125,8 @@ const LandingPage: React.FC = () => {
         }}
       >
         <h1>Saved Forms</h1>
-        <Divider />
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          flexGrow={1}
-          bgcolor={"lightblue"}
-          // style={{
-          //   backgroundColor: "", // Replace with your actual CSS variable or color code
-          //   backgroundImage: `url(./diagonal-lines.svg)`,
-          // }}
-        >
-          <Box display={"flex"} mt={6} gap={4} padding={4}>
-            {mockData.map((form) => (
-              <div key={form.id} style={infoBoxStyle}>
-                <div style={{ fontWeight: "bold" }}>{form.name}</div>
-                <Button
-                  onClick={() => handleSelectForm(form)}
-                  variant="contained"
-                >
-                  Edit Form
-                </Button>
-              </div>
-            ))}
-          </Box>
-        </Box>
+        {/* <Divider /> */}
+        <ViewAllForms />
       </Container>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Create Form</DialogTitle>

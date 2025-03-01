@@ -15,6 +15,8 @@ const PreviewDialogBtn = () => {
   const { elements } = useBuilderStore();
   const [open, setOpen] = useState(false);
 
+  console.log("elements", elements);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -92,7 +94,7 @@ const PreviewDialogBtn = () => {
                   transformOrigin: "top left",
                 }}
               >
-                {elements.map((element) => {
+                {elements?.map((element) => {
                   const FormComponent =
                     FormElements[element.type]?.formComponent;
                   return (

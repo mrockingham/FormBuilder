@@ -1,10 +1,11 @@
-// LoginPage.tsx
+// src/pages/Auth/LoginPage.tsx
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/controllers/authController";
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState(""); // renamed from username to email
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -12,28 +13,12 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // send email and password
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        // Save token to localStorage or your preferred storage
-        localStorage.setItem("authToken", data.token);
-        // Redirect to a protected route (e.g., dashboard)
-        navigate("/");
-      } else {
-        setError(data.message || "Login failed. Please try again.");
-      }
-    } catch (err) {
-      setError("An error occurred during login.");
+      const data = await loginUser(email, password);
+      localStorage.setItem("authToken", data.token);
+      navigate("/");
+    } catch (err: any) {
+      setError(err.message || "Login failed. Please try again.");
     }
   };
 
@@ -51,7 +36,7 @@ const LoginPage: React.FC = () => {
       </Typography>
       <Box component="form" onSubmit={handleSubmit} width="300px">
         <TextField
-          label="Email" // updated label from Username to Email
+          label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           margin="normal"

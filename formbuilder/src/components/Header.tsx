@@ -1,19 +1,22 @@
+// src/components/Header.tsx
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import { CgMenu } from "react-icons/cg";
-import { MdAccountCircle } from "react-icons/md";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Link, useNavigate } from "react-router-dom";
+import { CgMenu } from "react-icons/cg";
+import { MdAccountCircle } from "react-icons/md";
+import useUserStore from "../stores/userStore"; // adjust path as needed
 
-const Header = () => {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+const Header: React.FC = () => {
   const navigate = useNavigate();
+  const { user, logout } = useUserStore();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +29,12 @@ const Header = () => {
   const handleLogIn = () => {
     navigate("/login");
     handleClose();
+  };
+
+  const handleLogOut = () => {
+    logout();
+    handleClose();
+    navigate("/");
   };
 
   return (
@@ -42,44 +51,40 @@ const Header = () => {
             <CgMenu />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
               Home
             </Link>
           </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <MdAccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-                <MenuItem onClick={handleLogIn}>LogIn</MenuItem>
-              </Menu>
-            </div>
-          )}
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <MdAccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              keepMounted
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {user ? (
+                <>
+                  <MenuItem disabled>{user.name}</MenuItem>
+                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                </>
+              ) : (
+                <MenuItem onClick={handleLogIn}>Login</MenuItem>
+              )}
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

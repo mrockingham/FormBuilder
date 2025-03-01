@@ -198,7 +198,7 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         <div>{elementInstance.extraAttr.label}</div>
       )}
       <FormGroup>
-        {elementInstance.extraAttr.items.map((item) => (
+        {elementInstance.extraAttr.items?.map((item) => (
           <FormControlLabel
             key={item.id}
             control={
@@ -223,7 +223,7 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         <div>{elementInstance.extraAttr.label}</div>
       )}
       <FormGroup>
-        {elementInstance.extraAttr.items.map((item) => (
+        {elementInstance.extraAttr.items?.map((item) => (
           <FormControlLabel
             key={item.id}
             control={

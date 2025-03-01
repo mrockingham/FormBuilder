@@ -27,6 +27,8 @@ const Designer = () => {
     data: { isDropArea: true },
   });
 
+  console.log("elements", elements);
+
   useDndMonitor({
     onDragEnd: (event: DragEndEvent) => {
       const { active, over } = event;

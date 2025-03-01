@@ -42,7 +42,8 @@ const FormBuilder = () => {
 
       if (form) {
         setCurrentForm(form);
-        setElements(form?.elements as FormElementInstance[]);
+
+        setElements(form?.elements as unknown as FormElementInstance[]);
       }
     }
   }, []);

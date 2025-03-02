@@ -1,6 +1,9 @@
 import { Box, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { fetchForms } from "../../services/controllers/formController";
+import {
+  fetchForms,
+  deleteForm,
+} from "../../services/controllers/formController";
 import { useNavigate } from "react-router-dom";
 import useBuilderStore from "../../stores/designBuilderStore";
 import useFormStore from "../../stores/formStore";
@@ -74,19 +77,24 @@ const ViewAllForms = () => {
       >
         <Box display={"flex"} mt={6} gap={4} padding={4}>
           {forms?.map(
-            (form: {
-              id: React.Key | null | undefined;
-              name: string;
-              form_data: string;
-            }) => (
-              <div key={form.id}>
+            (form: { id: number; title: string; form_data: string }) => (
+              <div key={form.id} style={{ border: "1px solid black" }}>
                 <div style={{ fontWeight: "bold" }}>{form.title}</div>
-                <Button
-                  onClick={() => handleSelectForm(form)}
-                  variant="contained"
-                >
-                  Edit Form
-                </Button>
+                <Box display={"flex"} flexDirection={"column"} gap={2}>
+                  <Button
+                    onClick={() => handleSelectForm(form)}
+                    variant="contained"
+                  >
+                    Edit Form
+                  </Button>
+                  <Button
+                    onClick={() => deleteForm(form?.id)}
+                    variant="contained"
+                    color="error"
+                  >
+                    Delete Form
+                  </Button>
+                </Box>
               </div>
             )
           )}

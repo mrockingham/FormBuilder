@@ -13,7 +13,7 @@ import DragOverlayWrapper from "../components/designer/DragOverlayWrapper";
 import PreviewDialogBtn from "../components/preview/PreviewDialogBtn";
 import { Box } from "@mui/material";
 import SaveFormBtn from "../components/designer/SaveFormBtn";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { mockData } from "../components/MockData";
 
 import { FormElementInstance } from "../components/FormElements";
@@ -34,10 +34,13 @@ const FormBuilder = () => {
       tolerance: 5,
     },
   });
+  const location = useLocation();
+  console.log("useNavigate", location);
 
   const sensors = useSensors(mouseSensor, touchSensor);
   useEffect(() => {
     if (!currentForm && params.id) {
+      console.log("params.id", params);
       const form = mockData.find((f) => f.id === params.id);
 
       if (form) {
@@ -71,7 +74,10 @@ const FormBuilder = () => {
       >
         <Box>FormBuilder: {currentForm?.name}</Box>
         <Box flexDirection="row">
-          <SaveFormBtn />
+          <SaveFormBtn
+            edit={location.pathname.includes("edit")}
+            id={Number(params?.id)}
+          />
           <PreviewDialogBtn />
         </Box>
       </Box>

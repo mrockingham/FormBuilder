@@ -58,7 +58,7 @@ const ViewAllForms = () => {
 
     setElements(parsedData);
     // Optionally, navigate to the form builder page:
-    navigate(`/builder/${form.id}`);
+    navigate(`/builder/edit/${form.id}`);
   };
 
   console.log("Forms", forms);

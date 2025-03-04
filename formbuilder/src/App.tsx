@@ -34,6 +34,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/builder/:id" element={<FormBuilder />} />
+          <Route path="/builder/edit/:id" element={<FormBuilder />} />
         </Routes>
       </div>
     </div>

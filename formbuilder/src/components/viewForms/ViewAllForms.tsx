@@ -69,17 +69,27 @@ const ViewAllForms = () => {
         display={"flex"}
         flexDirection={"column"}
         flexGrow={1}
-        bgcolor={"lightblue"}
+        // bgcolor={"lightblue"}
         // style={{
         //   backgroundColor: "", // Replace with your actual CSS variable or color code
         //   backgroundImage: `url(./diagonal-lines.svg)`,
         // }}
       >
-        <Box display={"flex"} mt={6} gap={4} padding={4}>
+        <Box display={"flex"} mt={6} gap={8} padding={4}>
           {forms?.map(
             (form: { id: number; title: string; form_data: string }) => (
-              <div key={form.id} style={{ border: "1px solid black" }}>
-                <div style={{ fontWeight: "bold" }}>{form.title}</div>
+              <div
+                style={{ backgroundColor: "lightblue", padding: "10px" }}
+                key={form.id}
+              >
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {form.title}
+                </div>
                 <Box display={"flex"} flexDirection={"column"} gap={2}>
                   <Button
                     onClick={() => handleSelectForm(form)}

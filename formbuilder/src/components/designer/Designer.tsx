@@ -404,7 +404,7 @@ const DesignerElementWrapper = ({
           height: "120px",
 
           justifyContent: "center",
-          backgroundColor: mouseIsOver ? "limegreen" : "#ECF4E6",
+          backgroundColor: mouseIsOver ? "dodgerblue" : "#ECF4E6",
         }}
       >
         {!mouseIsOver && <DesignerElement elementInstance={element} />}

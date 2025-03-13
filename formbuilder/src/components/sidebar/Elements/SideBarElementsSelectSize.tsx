@@ -140,7 +140,7 @@ const SideBarElementsSelectSize: React.FC<SideBarElementsSelectSizeProps> = ({
             setShowSelectedElement({ showElements: false, Element: "" });
           }}
           size={20}
-          color="limegreen"
+          color="dodgerblue"
           style={{ cursor: "pointer" }}
         />
       </Box>

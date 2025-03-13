@@ -11,10 +11,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { CgMenu } from "react-icons/cg";
 import { MdAccountCircle } from "react-icons/md";
 import useUserStore from "../stores/userStore"; // adjust path as needed
+import useBuilderStore from "../stores/designBuilderStore";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout } = useUserStore();
+  const { clear } = useBuilderStore();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -37,6 +39,11 @@ const Header: React.FC = () => {
     navigate("/");
   };
 
+  const handleHome = () => {
+    clear();
+    navigate("/");
+  };
+
   return (
     <Box>
       <AppBar position="static">
@@ -50,10 +57,13 @@ const Header: React.FC = () => {
           >
             <CgMenu />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              Home
-            </Link>
+          <Typography
+            onClick={handleHome}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
+            <Box style={{ textDecoration: "none", color: "inherit" }}>Home</Box>
           </Typography>
           <div>
             <IconButton

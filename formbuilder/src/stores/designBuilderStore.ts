@@ -9,6 +9,7 @@ interface DesignerContext {
   selectedElement: FormElementInstance | null;
   setSelectedElement: (element: FormElementInstance | null) => void;
   updateElement: (id: string, element: FormElementInstance) => void;
+  clear: () => void;
 }
 
 const useBuilderStore = create<DesignerContext>((set) => ({
@@ -41,6 +42,7 @@ const useBuilderStore = create<DesignerContext>((set) => ({
   setElements: (elements) => {
     set({ elements });
   },
+  clear: () => set({ elements: [] }),
 }));
 
 export default useBuilderStore;

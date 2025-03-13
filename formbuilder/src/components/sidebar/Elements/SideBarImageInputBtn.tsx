@@ -58,7 +58,7 @@ const SideBarImageInputBtn = () => {
               >
                 <MdImage
                   style={{
-                    border: "1px solid limegreen",
+                    border: "1px solid dodgerblue",
                     width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                                 -16px -10px 32px #ffffff`,
@@ -99,7 +99,7 @@ const SideBarImageInputBtn = () => {
               >
                 <MdOndemandVideo
                   style={{
-                    border: "1px solid limegreen",
+                    border: "1px solid dodgerblue",
                     width: "30px",
                     boxShadow: `16px 10px 40px #5e625c,
                                 -16px -10px 32px #ffffff`,

@@ -68,17 +68,17 @@ const SidebarBtnElement: React.FC<SidebarBtnElementProps> = ({
         <Icon
           style={{
             paddingLeft: "8px",
-            color: "limegreen",
+            color: "dodgerblue",
           }}
         />
       }
       {...draggable.attributes}
       {...draggable.listeners}
     >
-      <div style={{ color: "limegreen", fontSize: "10px" }}>
+      <div style={{ color: "dodgerblue", fontSize: "10px" }}>
         {usedLabel}
         <LinearProgress
-          style={{ width: "40px", color: "limegreen" }}
+          style={{ width: "40px", color: "dodgerblue" }}
           color="inherit"
           variant="determinate"
           value={progressValue}

@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Card, CardContent } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import {
   fetchForms,
@@ -7,6 +7,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import useBuilderStore from "../../stores/designBuilderStore";
 import useFormStore from "../../stores/formStore";
+import { IoFilterOutline } from "react-icons/io5";
+import { FaSortAlphaDown } from "react-icons/fa";
+import { BsList, BsViewList } from "react-icons/bs";
 
 const ViewAllForms = () => {
   const [forms, setForms] = useState<any>([]);
@@ -29,6 +32,7 @@ const ViewAllForms = () => {
     getForms();
   }, []);
 
+  console.log("Forms", forms);
   const handleSelectForm = (form: any) => {
     console.log("Selected form", form);
     setCurrentForm(form.name);
@@ -64,7 +68,23 @@ const ViewAllForms = () => {
   console.log("Forms", forms);
   return (
     <div>
-      {" "}
+      <Box display={"flex"} gap={2} mt={1}>
+        <Box>
+          <IoFilterOutline />
+          {"filter "}
+        </Box>
+        <Box>
+          <FaSortAlphaDown />
+          Sort
+        </Box>
+        <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+          <Box display={"flex"} gap={1}>
+            <BsList />
+            <BsViewList />
+          </Box>
+          List
+        </Box>
+      </Box>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -75,37 +95,66 @@ const ViewAllForms = () => {
         //   backgroundImage: `url(./diagonal-lines.svg)`,
         // }}
       >
-        <Box display={"flex"} mt={6} gap={8} padding={4}>
+        <Box
+          display={"flex"}
+          mt={2}
+          gap={4}
+          padding={4}
+          height={"180px"}
+          width={"400px"}
+        >
           {forms?.map(
             (form: { id: number; title: string; form_data: string }) => (
-              <div
-                style={{ backgroundColor: "lightblue", padding: "10px" }}
+              <Card
                 key={form.id}
+                sx={{
+                  // border: "1px solid black",
+
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  height: "100%",
+                  width: "100%",
+                  backgroundColor: "#ECF4E6",
+                  border: "1px solid lightgray",
+                  boxShadow: "0 0 8px gray",
+                  "&:hover": {
+                    backgroundColor: "#C6E2B5", // change background color on hover
+                    boxShadow: "0 0 12px gray", // change box shadow on hover
+                    cursor: "pointer", // add cursor pointer on hover
+                  },
+                }}
               >
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    marginBottom: "10px",
-                  }}
-                >
+                <Box ml={2} mt={1} style={{ fontWeight: "bold" }}>
                   {form.title}
-                </div>
-                <Box display={"flex"} flexDirection={"column"} gap={2}>
+                </Box>
+                <Box
+                  ml={1}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  alignItems={"flex-start"}
+                  gap={1}
+                >
+                  <div>ID:</div>
+                  <div>Event:</div>
+                  <div>Questions:</div>
+                </Box>
+                <Box mb={2} display={"flex"} justifyContent={"center"}>
                   <Button
                     onClick={() => handleSelectForm(form)}
                     variant="contained"
                   >
                     Edit Form
                   </Button>
-                  <Button
+                  {/* <Button
                     onClick={() => deleteForm(form?.id)}
                     variant="contained"
                     color="error"
-                  >
+                    >
                     Delete Form
-                  </Button>
+                    </Button> */}
                 </Box>
-              </div>
+              </Card>
             )
           )}
         </Box>

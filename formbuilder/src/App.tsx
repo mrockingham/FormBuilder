@@ -16,7 +16,8 @@ const App = () => {
         minHeight: "100vh",
         minWidth: "100%",
         backgroundColor: "var(--background)",
-        maxHeight: "100vh",
+        maxHeight: "90vh",
+        overflow: "hidden",
       }}
     >
       <Header />

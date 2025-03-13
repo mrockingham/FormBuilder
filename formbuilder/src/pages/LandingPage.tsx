@@ -100,11 +100,11 @@ const LandingPage: React.FC = () => {
     </div> */}
       <Box
         display={"flex"}
-        justifyContent={"space-between"}
+        justifyContent={"flex-end"}
         alignItems={"center"}
         paddingX={2}
       >
-        <div>Saved Forms</div>
+        {/* <div>Saved Forms</div> */}
         <Button
           onClick={() => {
             setOpen(true);
@@ -122,10 +122,11 @@ const LandingPage: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           flexGrow: 1,
+          marginTop: "40px",
         }}
       >
         <h1>Saved Forms</h1>
-        {/* <Divider /> */}
+        <Divider />
         <ViewAllForms />
       </Container>
       <Dialog onClose={handleClose} open={open}>

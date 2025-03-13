@@ -11,8 +11,8 @@ const SideBar = () => {
     <aside
       style={{
         height: "100%",
-        width: "400px",
-        maxWidth: "400px",
+        minWidth: "330px",
+        maxWidth: "350px",
         display: "flex",
         flexDirection: "column",
         flexGrow: 1,

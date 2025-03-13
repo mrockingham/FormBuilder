@@ -8,7 +8,7 @@ import PropertiesFormSideBar from "./PropertiesFormSidebar";
 const SideBar = () => {
   const { selectedElement } = useBuilderStore();
   return (
-    <div
+    <aside
       style={{
         height: "100%",
         minWidth: "330px",
@@ -25,7 +25,7 @@ const SideBar = () => {
     >
       {!selectedElement && <FormElementsSidebar />}
       {selectedElement && <PropertiesFormSideBar />}
-    </div>
+    </aside>
   );
 };
 

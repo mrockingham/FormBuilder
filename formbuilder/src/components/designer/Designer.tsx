@@ -12,6 +12,9 @@ import useBuilderStore from "../../stores/designBuilderStore";
 import { idGenerator } from "../utils/idGenerator";
 import { Button } from "@mui/material";
 import { BiSolidTrash } from "react-icons/bi";
+import { CgSidebarRight } from "react-icons/cg";
+import SidebarRight from "../sidebarRight/SideBarRight";
+import MultiPageNavigator from "../MultiPageNavigator";
 
 const Designer = () => {
   const {
@@ -20,7 +23,27 @@ const Designer = () => {
     selectedElement,
     setSelectedElement,
     removeElement,
+    setElements,
   } = useBuilderStore();
+
+  const [pages, setPages] = useState<FormElementInstance[][]>([elements]);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // When page is switched, update the builder store elements.
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 0 && newPage < pages.length) {
+      setCurrentPage(newPage);
+      setElements(pages[newPage]);
+    }
+  };
+
+  // Add a new page: append an empty page.
+  const handleAddPage = () => {
+    const newPages = [...pages, []];
+    setPages(newPages);
+    setCurrentPage(newPages.length - 1);
+    setElements([]); // clear builder elements for new page
+  };
 
   const droppable = useDroppable({
     id: "dropArea",
@@ -134,6 +157,7 @@ const Designer = () => {
         display: "flex",
         backgroundColor: "#ECF4E6",
         flexGrow: 1,
+        overflow: "hidden",
       }}
     >
       <SideBar />
@@ -143,6 +167,12 @@ const Designer = () => {
         }}
         style={{ padding: "30px", width: "100%", display: "flex" }}
       >
+        <MultiPageNavigator
+          currentPage={currentPage}
+          totalPages={pages.length}
+          onPageChange={handlePageChange}
+          onAddPage={handleAddPage}
+        />
         <div
           ref={droppable.setNodeRef}
           style={{
@@ -199,7 +229,15 @@ const Designer = () => {
             </div>
           )}
         </div>
+        <MultiPageNavigator
+          currentPage={currentPage}
+          totalPages={pages.length}
+          onPageChange={handlePageChange}
+          onAddPage={handleAddPage}
+        />
       </div>
+
+      <SidebarRight />
     </div>
   );
 };

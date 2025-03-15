@@ -8,6 +8,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  IconButton,
 } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import useBuilderStore from "../../stores/designBuilderStore";
@@ -81,31 +82,31 @@ const PropertiesFormSidebar: React.FC = () => {
 
   console.log("PropertiesForm", PropertiesForm);
   // Function to save (or update) the current question.
-  const handleSaveQuestion = async () => {
-    try {
-      const payload = {
-        question_text: selectedElement.extraAttr.label,
-        question_type_id: selectedElement.extraAttr.question_type_id,
-        min_length: selectedElement.extraAttr.min_length,
-        max_length: selectedElement.extraAttr.max_length,
-        validation_type: selectedElement.extraAttr.validation_type,
-        validation_message: selectedElement.extraAttr.validation_message,
-        image_path: selectedElement.extraAttr.image_path,
-        style: selectedElement.extraAttr.style,
-        is_ffs: selectedElement.extraAttr.is_ffs,
-        question_name: selectedElement.type, // or any other field you want to send
-      };
+  // const handleSaveQuestion = async () => {
+  //   try {
+  //     const payload = {
+  //       question_text: selectedElement.extraAttr.label,
+  //       question_type_id: selectedElement.extraAttr.question_type_id,
+  //       min_length: selectedElement.extraAttr.min_length,
+  //       max_length: selectedElement.extraAttr.max_length,
+  //       validation_type: selectedElement.extraAttr.validation_type,
+  //       validation_message: selectedElement.extraAttr.validation_message,
+  //       image_path: selectedElement.extraAttr.image_path,
+  //       style: selectedElement.extraAttr.style,
+  //       is_ffs: selectedElement.extraAttr.is_ffs,
+  //       question_name: selectedElement.type, // or any other field you want to send
+  //     };
 
-      // Here, we're using addQuestion to save the question.
-      // You might replace this with updateQuestion if the question exists.
-      await addQuestion(payload);
-      alert("Question saved successfully!");
-      // Optionally navigate, e.g., navigate(`/builder/${selectedElement.id}`);
-    } catch (error) {
-      console.error("Error saving question:", error);
-      alert("Failed to save question.");
-    }
-  };
+  //     // Here, we're using addQuestion to save the question.
+  //     // You might replace this with updateQuestion if the question exists.
+  //     await addQuestion(payload);
+  //     alert("Question saved successfully!");
+  //     // Optionally navigate, e.g., navigate(`/builder/${selectedElement.id}`);
+  //   } catch (error) {
+  //     console.error("Error saving question:", error);
+  //     alert("Failed to save question.");
+  //   }
+  // };
 
   return (
     <Box
@@ -113,7 +114,6 @@ const PropertiesFormSidebar: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        maxHeight: "80vh",
         overflowY: "auto",
         p: 2,
       }}
@@ -125,17 +125,18 @@ const PropertiesFormSidebar: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <h3>Element Properties</h3>
-        <Button variant="outlined" onClick={() => setSelectedElement(null)}>
-          <AiOutlineClose />
-        </Button>
+        <Box style={{ fontWeight: "bold" }}>Element Properties</Box>
+        <IconButton onClick={() => setSelectedElement(null)}>
+          <AiOutlineClose size={16} />
+        </IconButton>
       </Box>
       <Divider sx={{ mb: 4 }} />
 
       {/* Dropdown to select an existing question */}
-      <FormControl fullWidth sx={{ mb: 2 }}>
+      <FormControl sx={{ mb: 2, pl: 3, pr: 3 }}>
         <InputLabel id="select-question-label">Select Question</InputLabel>
         <Select
+          variant="standard"
           labelId="select-question-label"
           label="Select Question"
           value={selectedQuestionId}

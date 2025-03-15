@@ -18,11 +18,13 @@ const SaveFormBtn: React.FC<SaveFormBtnProps> = ({ edit, id }) => {
 
   const updateFormContent = async () => {
     try {
+      console.log("current form save", currentForm);
+      console.log("elements", elements);
       const JsonElements = JSON.stringify(elements);
 
       if (edit) {
         const update = await updateForm(id, {
-          title: currentForm?.name || "",
+          title: currentForm || "",
           form_data: JsonElements,
         });
         return update;

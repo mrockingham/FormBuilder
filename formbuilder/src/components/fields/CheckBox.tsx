@@ -3,19 +3,18 @@ import React, { useEffect } from "react";
 import {
   FormElement,
   FormElementInstance,
-  FormElementKey,
   InputSize,
+  FormElementKey,
 } from "../FormElements";
 import { IoIosCheckboxOutline } from "react-icons/io";
 import {
   FormControlLabel,
   FormGroup,
   Checkbox,
-  FormControl,
-  Switch,
   TextField,
   Button,
   IconButton,
+  Box,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
@@ -24,9 +23,18 @@ import useBuilderStore from "../../stores/designBuilderStore";
 // Use one key for the Checkbox element.
 const type: FormElementKey = "Checkbox";
 
+// const textInputSizes: { label: string; size: InputSize }[] = [
+//   { label: "XX-S", size: "1/6" },
+//   { label: "X-S", size: "1/4" },
+//   { label: "S", size: "1/3" },
+//   { label: "M", size: "1/2" },
+//   { label: "L", size: "2/3" },
+//   { label: "X-L", size: "3/4" },
+//   { label: "XX-L", size: "5/6" },
+//   { label: "Full", size: "100%" },
+// ];
+
 // Define the extra attributes for a Checkbox.
-// 'label' represents the group label,
-// 'items' is an array of checkbox options, each with an id and label.
 export type CheckboxExtraAttr = {
   label: string;
   required: boolean;
@@ -37,7 +45,6 @@ export type CheckboxExtraAttr = {
 // Create a custom instance type using the extra attributes.
 type CustomInstance = FormElementInstance<CheckboxExtraAttr>;
 
-// Define the shape of the form data used in the properties editor.
 interface PropertiesFormData {
   label: string;
   name: string;
@@ -108,6 +115,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
             />
           )}
         />
+
         <Controller
           control={form.control}
           name="name"
@@ -121,30 +129,27 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
             />
           )}
         />
+
         <Controller
           control={form.control}
           name="required"
           render={({ field }) => (
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <FormControl>
-                <Switch checked={field.value} onChange={field.onChange} />
-              </FormControl>
+            <Box display="flex" alignItems="center" gap="8px">
+              <Checkbox checked={field.value} onChange={field.onChange} />
               <span>Required</span>
-            </div>
+            </Box>
           )}
         />
       </div>
       <div>
         <h4>Checkbox Options</h4>
         {fields.map((item, index) => (
-          <div
+          <Box
             key={item.id}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              marginBottom: "8px",
-            }}
+            display="flex"
+            alignItems="center"
+            gap="8px"
+            mb={1}
           >
             <Controller
               control={form.control}
@@ -163,13 +168,12 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
             <IconButton
               onClick={() => {
                 remove(index);
-                // Immediately update the builder store with the new items list.
                 form.handleSubmit(applyChanges)();
               }}
             >
               <MdDelete />
             </IconButton>
-          </div>
+          </Box>
         ))}
         <Button
           variant="outlined"
@@ -192,17 +196,20 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <h3>{elementInstance.extraAttr.name}</h3>
-      {elementInstance.extraAttr.label && (
-        <div>{elementInstance.extraAttr.label}</div>
-      )}
-      <FormGroup>
+      <FormGroup style={{ display: "flex", flexDirection: "row" }}>
         {elementInstance.extraAttr.items?.map((item) => (
           <FormControlLabel
             key={item.id}
             control={
-              <Checkbox defaultChecked={elementInstance.extraAttr.required} />
+              <Checkbox
+                sx={{
+                  color: "lightblue",
+                  "&.Mui-checked": { color: "lightblue" },
+                }}
+                defaultChecked={elementInstance.extraAttr.required}
+              />
             }
             label={item.label}
           />
@@ -212,33 +219,51 @@ const FormComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   );
 };
 
-// The designer component renders the checkboxes in the form builder.
+// Updated DesignerComponent for Checkbox with matching style
 const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
   elementInstance,
 }) => {
   return (
-    <div>
-      <h3>{elementInstance.extraAttr.name}</h3>
-      {elementInstance.extraAttr.label && (
-        <div>{elementInstance.extraAttr.label}</div>
-      )}
-      <FormGroup>
-        {elementInstance.extraAttr.items?.map((item) => (
-          <FormControlLabel
-            key={item.id}
-            control={
-              <Checkbox defaultChecked={elementInstance.extraAttr.required} />
-            }
-            label={item.label}
-          />
-        ))}
-      </FormGroup>
-    </div>
+    <Box
+      sx={{
+        width: "100%",
+      }}
+    >
+      <div style={{ fontSize: "1rem", marginBottom: "2px" }}>
+        {elementInstance.extraAttr.name}
+      </div>
+      <Box
+        sx={{
+          width: "96%",
+          backgroundColor: "white",
+          pl: 2,
+          border: "1px solid lightblue",
+          borderRadius: "16px",
+          boxShadow: "0 0 10px lightgray",
+        }}
+      >
+        <FormGroup row>
+          {elementInstance.extraAttr.items?.map((item) => (
+            <FormControlLabel
+              key={item.id}
+              control={
+                <Checkbox
+                  sx={{
+                    color: "lightblue",
+                    "&.Mui-checked": { color: "lightblue" },
+                    transform: "scale(0.8)", // scales checkbox down by 20%
+                  }}
+                />
+              }
+              label={<span style={{ fontSize: "0.8rem" }}>{item.label}</span>}
+            />
+          ))}
+        </FormGroup>
+      </Box>
+    </Box>
   );
 };
 
-// Export a unified Checkbox form element.
-// The construct function now sets up a default checkbox group with one option.
 export const CheckboxFormElement: FormElement<CheckboxExtraAttr> = {
   type,
   construct: (id: string, sizeOverride?: InputSize) => ({
@@ -249,7 +274,7 @@ export const CheckboxFormElement: FormElement<CheckboxExtraAttr> = {
       label: "Checkbox Group",
       required: false,
       name: "Checkbox",
-      items: [{ id: "option-1", label: "Option 1" }],
+      items: [{ id: `${id}-option-1`, label: "Option 1" }],
     },
     formComponent: FormComponent,
     designerCompontent: DesignerComponent,
@@ -259,3 +284,5 @@ export const CheckboxFormElement: FormElement<CheckboxExtraAttr> = {
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 };
+
+export default CheckboxFormElement;

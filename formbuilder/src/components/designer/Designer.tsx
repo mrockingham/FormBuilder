@@ -10,7 +10,7 @@ import {
 import { FormElementInstance, FormElements } from "../FormElements";
 import useBuilderStore from "../../stores/designBuilderStore";
 import { idGenerator } from "../utils/idGenerator";
-import { Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { BiSolidTrash } from "react-icons/bi";
 import { CgSidebarRight } from "react-icons/cg";
 import SidebarRight from "../sidebarRight/SideBarRight";
@@ -154,10 +154,11 @@ const Designer = () => {
     <div
       style={{
         maxWidth: "100%",
+        height: "90vh",
         display: "flex",
         backgroundColor: "#ECF4E6",
         flexGrow: 1,
-        overflow: "hidden",
+        overflowY: "auto",
       }}
     >
       <SideBar />
@@ -167,74 +168,93 @@ const Designer = () => {
         }}
         style={{ padding: "30px", width: "100%", display: "flex" }}
       >
-        <MultiPageNavigator
-          currentPage={currentPage}
-          totalPages={pages.length}
-          onPageChange={handlePageChange}
-          onAddPage={handleAddPage}
-        />
-        <div
-          ref={droppable.setNodeRef}
-          style={{
-            maxWidth: "1120px",
-            height: "100%",
-            margin: "auto",
-            display: "flex",
-            flexDirection: "column",
-            backgroundColor: "white",
-            borderRadius: "1rem",
-            flexGrow: 1,
-            overflowY: "auto",
-            overflowX: "hidden",
-            border: "1px solid lightgray",
-            boxShadow: "0 0 8px gray",
-            paddingRight: "10px",
-          }}
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          flexGrow={1}
+          justifyContent={"center"}
         >
-          {!droppable.isOver && elements?.length === 0 && (
-            <div
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "flex",
-                flexGrow: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                maxWidth: "1120px",
-                backgroundImage: `url(./diagonal-lines.svg)`,
-              }}
-            >
-              Drop Here
-            </div>
-          )}
-          {droppable.isOver && elements?.length === 0 && (
-            <div style={{ padding: "4px", width: "100%" }}></div>
-          )}
-          {elements?.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                flexWrap: "wrap",
-                alignItems: "flex-start",
-                maxWidth: "1120px",
-                gap: "20px",
-                padding: "20px",
-              }}
-            >
-              {elements.map((element) => (
-                <DesignerElementWrapper key={element.id} element={element} />
-              ))}
-            </div>
-          )}
-        </div>
-        <MultiPageNavigator
-          currentPage={currentPage}
-          totalPages={pages.length}
-          onPageChange={handlePageChange}
-          onAddPage={handleAddPage}
-        />
+          {/* <MultiPageNavigator
+            currentPage={currentPage}
+            totalPages={pages.length}
+            onPageChange={handlePageChange}
+            onAddPage={handleAddPage}
+          /> */}
+
+          {/* Designer */}
+          <div
+            ref={droppable.setNodeRef}
+            style={{
+              maxWidth: "1120px",
+              minWidth: "80%",
+              height: "100%",
+              margin: "auto",
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "white",
+              borderRadius: "1rem",
+              flexGrow: 1,
+              overflowY: "auto",
+              overflowX: "hidden",
+              border: "1px solid lightgray",
+              boxShadow: "0 0 8px gray",
+              paddingRight: "10px",
+            }}
+          >
+            {!droppable.isOver && elements?.length === 0 && (
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  display: "flex",
+                  flexGrow: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minWidth: "800px",
+                  maxWidth: "1120px",
+                  // width: "100%",
+                  backgroundImage: `url(./diagonal-lines.svg)`,
+                }}
+              >
+                Drop Here
+              </div>
+            )}
+            {droppable.isOver && elements?.length === 0 && (
+              <div
+                style={{
+                  padding: "4px",
+                  minWidth: "800px",
+                  maxWidth: "1120px",
+                }}
+              ></div>
+            )}
+            {elements?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  flexWrap: "wrap",
+                  alignItems: "flex-start",
+                  maxWidth: "1120px",
+                  gap: "20px",
+                  padding: "20px",
+                }}
+              >
+                {elements.map((element) => (
+                  <DesignerElementWrapper key={element.id} element={element} />
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Designer */}
+          {/* <MultiPageNavigator
+            currentPage={currentPage}
+            totalPages={pages.length}
+            onPageChange={handlePageChange}
+            onAddPage={handleAddPage}
+          /> */}
+        </Box>
       </div>
 
       <SidebarRight />
@@ -322,9 +342,9 @@ const DesignerElementWrapper = ({
       {...draggable.attributes}
       style={{
         position: "relative",
-        height: "100px",
-        border: "1px solid lightgray",
-        boxShadow: "0 0 10px lightgray",
+        minHeight: "60px",
+        // border: "1px solid lightgray",
+        // boxShadow: "0 0 10px lightgray",
         backgroundColor: "transparent",
         padding: "10px",
         width: elementWidth,
@@ -371,8 +391,31 @@ const DesignerElementWrapper = ({
       ></div>
 
       {mouseIsOver && (
-        <>
-          <div style={{ position: "absolute", right: "0", height: "100%" }}>
+        <Box
+          style={{
+            position: "absolute",
+            top: "0",
+            right: "0",
+            // transform: "translate(-50%, -50%)",
+            // animation: "pulse 1s infinite",
+          }}
+        >
+          {/* this */}
+          <IconButton
+            // variant="text"
+            // style={{
+            //   display: "flex",
+            //   justifyContent: "center",
+            //   height: "100%",
+            // }}
+            onClick={(e) => {
+              e.stopPropagation();
+              removeElement(element.id);
+            }}
+          >
+            <BiSolidTrash size={20} />
+          </IconButton>
+          {/* <div>
             <Button
               variant="outlined"
               style={{
@@ -387,8 +430,8 @@ const DesignerElementWrapper = ({
             >
               <BiSolidTrash color="white" size={25} />
             </Button>
-          </div>
-          <div
+          </div> */}
+          {/* <div
             style={{
               position: "absolute",
               top: "50%",
@@ -398,8 +441,8 @@ const DesignerElementWrapper = ({
             }}
           >
             <p>Click for Properties or drag to move</p>
-          </div>
-        </>
+          </div> */}
+        </Box>
       )}
 
       {topHalf.isOver && (
@@ -439,13 +482,14 @@ const DesignerElementWrapper = ({
         style={{
           display: "flex",
           width: "100%",
-          height: "120px",
+          // height: "120px",
 
           justifyContent: "center",
-          backgroundColor: mouseIsOver ? "dodgerblue" : "#ECF4E6",
+          // backgroundColor: mouseIsOver ? "dodgerblue" : "#ECF4E6",
         }}
       >
-        {!mouseIsOver && <DesignerElement elementInstance={element} />}
+        <DesignerElement elementInstance={element} />
+        {/* {!mouseIsOver && <DesignerElement elementInstance={element} />} */}
       </div>
       {bottomHalf.isOver && (
         <div

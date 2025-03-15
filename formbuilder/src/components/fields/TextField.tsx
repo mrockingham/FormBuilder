@@ -28,6 +28,7 @@ const textFieldStyle = {
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
       borderColor: "lightblue",
+      boxShadow: "0 0 10px lightgray",
       borderRadius: "16px",
       height: "90%",
     },
@@ -55,6 +56,7 @@ export type TextFieldExtraAttr = {
   style?: string;
   is_ffs?: boolean;
   form_field_size?: string;
+  question_type?: string;
 };
 
 type CustomInstance = FormElementInstance<TextFieldExtraAttr>;
@@ -74,6 +76,7 @@ interface PropertiesFormData {
   style: string;
   is_ffs: boolean;
   form_field_size: string;
+  question_type: string;
 }
 
 const textInputSizes: { label: string; size: InputSize }[] = [
@@ -109,6 +112,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       style: elementInstance.extraAttr.style || "",
       is_ffs: elementInstance.extraAttr.is_ffs || false,
       form_field_size: elementInstance.extraAttr.form_field_size || "100%",
+      question_type: elementInstance.extraAttr.question_type || "",
     },
   });
 
@@ -128,6 +132,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       style: elementInstance.extraAttr.style || "",
       is_ffs: elementInstance.extraAttr.is_ffs || false,
       form_field_size: elementInstance.extraAttr.form_field_size || "100%",
+      question_type: elementInstance.extraAttr.question_type || "",
     });
   }, [elementInstance, form]);
 
@@ -150,6 +155,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         style: values.style,
         is_ffs: values.is_ffs,
         form_field_size: values.form_field_size,
+        question_type: values.question_type,
       },
     });
   };
@@ -172,6 +178,7 @@ const PropertiesComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         is_ffs: formValues.is_ffs,
         question_name: "text-field", // or any other field you want to send
         form_field_size: formValues.form_field_size,
+        question_type: formValues.question_type,
       };
 
       // Here, we're using addQuestion to save the question.

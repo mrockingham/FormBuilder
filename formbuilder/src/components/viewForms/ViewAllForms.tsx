@@ -35,7 +35,7 @@ const ViewAllForms = () => {
   console.log("Forms", forms);
   const handleSelectForm = (form: any) => {
     console.log("Selected form", form);
-    setCurrentForm(form.name);
+    setCurrentForm(form.title);
 
     // First parse attempt
     let parsedData;

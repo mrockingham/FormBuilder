@@ -39,6 +39,7 @@ const FormBuilder = () => {
 
   const sensors = useSensors(mouseSensor, touchSensor);
   useEffect(() => {
+    console.log("currentForm", currentForm);
     if (!currentForm && params.id) {
       console.log("params.id", params);
       const form = mockData.find((f) => f.id === params.id);

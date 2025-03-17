@@ -227,6 +227,7 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
     <Box
       sx={{
         width: "100%",
+        p: 2,
       }}
     >
       <div style={{ fontSize: "1rem", marginBottom: "2px" }}>
@@ -234,7 +235,6 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
       </div>
       <Box
         sx={{
-          width: "96%",
           backgroundColor: "white",
           pl: 2,
           border: "1px solid lightblue",

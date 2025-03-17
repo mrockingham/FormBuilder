@@ -342,7 +342,11 @@ const SidebarRight: React.FC = () => {
                     New Event
                   </MenuItem>
                   {events?.map((event) => (
-                    <MenuItem key={event.id} value={event.id}>
+                    <MenuItem
+                      key={event.id}
+                      value={event.id}
+                      onClick={() => setDisplayNewEvent(false)}
+                    >
                       {event.title} -{" "}
                       {new Date(event.start_date).toLocaleDateString()}
                     </MenuItem>

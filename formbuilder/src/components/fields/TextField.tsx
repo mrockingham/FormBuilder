@@ -495,7 +495,7 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
         <div>{elementInstance.extraAttr.label || "Label"}</div>
         <TextField
           sx={textFieldStyle}
-          style={{ borderColor: "dodgerblue" }}
+          style={{ borderColor: "dodgerblue", backgroundColor: "white" }}
           size="small"
           fullWidth
           variant="outlined"

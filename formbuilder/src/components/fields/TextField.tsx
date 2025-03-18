@@ -499,9 +499,9 @@ const DesignerComponent: React.FC<{ elementInstance: CustomInstance }> = ({
           size="small"
           fullWidth
           variant="outlined"
-          label={capitalizeFirstLetter(
-            elementInstance.extraAttr.placeholder || "Placeholder..."
-          )}
+          // label={capitalizeFirstLetter(
+          //   elementInstance.extraAttr.placeholder || "Placeholder..."
+          // )}
           required={elementInstance.extraAttr.required}
         />
       </Box>

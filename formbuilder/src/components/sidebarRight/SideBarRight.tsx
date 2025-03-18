@@ -374,14 +374,17 @@ const SidebarRight: React.FC = () => {
                     control={form.control}
                     name="location"
                     render={({ field }) => (
-                      <TextField
-                        sx={textFieldStyle}
-                        label="Location"
-                        {...field}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") e.currentTarget.blur();
-                        }}
-                      />
+                      <Box gap="5px" display="flex" flexDirection="column">
+                        <div>Location</div>
+                        <TextField
+                          sx={textFieldStyle}
+                          // label="Location"
+                          {...field}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") e.currentTarget.blur();
+                          }}
+                        />
+                      </Box>
                     )}
                   />
                   <Box>Total Questions</Box>

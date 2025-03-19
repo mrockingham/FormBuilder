@@ -101,58 +101,77 @@ const ViewAllForms = () => {
           gap={4}
           padding={4}
           height={"180px"}
-          width={"400px"}
+          width={"600px"}
+          textAlign={"center"}
         >
           {forms?.map(
             (form: { id: number; title: string; form_data: string }) => (
               <Card
                 key={form.id}
                 sx={{
-                  // border: "1px solid black",
-
+                  borderRadius: "8px",
+                  padding: "6px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
                   height: "100%",
                   width: "100%",
-                  backgroundColor: "#ECF4E6",
+                  backgroundColor: "#f4f5f8",
                   border: "1px solid lightgray",
                   boxShadow: "0 0 8px gray",
                   "&:hover": {
-                    backgroundColor: "#C6E2B5", // change background color on hover
-                    boxShadow: "0 0 12px gray", // change box shadow on hover
+                    // change background color on hover
+                    boxShadow: "0 0 22px gray", // change box shadow on hover
                     cursor: "pointer", // add cursor pointer on hover
+                    scale: "1.08",
                   },
                 }}
               >
-                <Box ml={2} mt={1} style={{ fontWeight: "bold" }}>
-                  {form.title}
-                </Box>
                 <Box
-                  ml={1}
+                  bgcolor={"white"}
+                  height={"100%"}
                   display={"flex"}
                   flexDirection={"column"}
-                  alignItems={"flex-start"}
-                  gap={1}
+                  justifyContent={"space-between"}
+                  alignContent={"space-between"}
+                  borderRadius={"8px"}
                 >
-                  <div>ID:</div>
-                  <div>Event:</div>
-                  <div>Questions:</div>
-                </Box>
-                <Box mb={2} display={"flex"} justifyContent={"center"}>
-                  <Button
-                    onClick={() => handleSelectForm(form)}
-                    variant="contained"
+                  <Box style={{ fontWeight: "bold" }}>{form.title}</Box>
+                  <Box
+                    ml={1}
+                    display={"flex"}
+                    flexDirection={"column"}
+                    alignItems={"flex-start"}
+                    gap={1}
                   >
-                    Edit Form
-                  </Button>
-                  {/* <Button
+                    <div>ID:</div>
+                    <div>Event:</div>
+                    <div>Questions:</div>
+                  </Box>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"center"}
+                    width={"100%"}
+                  >
+                    <Button
+                      sx={{
+                        width: "100%",
+                        height: "30px",
+                        borderRadius: "0px",
+                      }}
+                      onClick={() => handleSelectForm(form)}
+                      variant="contained"
+                    >
+                      Edit Form
+                    </Button>
+                    {/* <Button
                     onClick={() => deleteForm(form?.id)}
                     variant="contained"
                     color="error"
                     >
                     Delete Form
                     </Button> */}
+                  </Box>
                 </Box>
               </Card>
             )

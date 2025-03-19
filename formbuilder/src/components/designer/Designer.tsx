@@ -156,7 +156,7 @@ const Designer = () => {
         maxWidth: "100%",
         height: "90vh",
         display: "flex",
-        backgroundColor: "#ECF4E6",
+        backgroundColor: "#f3f9ff",
         flexGrow: 1,
         overflowY: "auto",
       }}
@@ -170,8 +170,9 @@ const Designer = () => {
       >
         <Box
           display={"flex"}
-          flexDirection={"column"}
-          flexGrow={1}
+          // flexDirection={"column"}
+          width={"100%"}
+          // flexGrow={2}
           justifyContent={"center"}
         >
           {/* <MultiPageNavigator
@@ -188,7 +189,7 @@ const Designer = () => {
               maxWidth: "1120px",
               minWidth: "80%",
               height: "100%",
-              margin: "auto",
+
               display: "flex",
               flexDirection: "column",
               backgroundColor: "white",
@@ -248,12 +249,13 @@ const Designer = () => {
             )}
           </div>
           {/* Designer */}
-          {/* <MultiPageNavigator
+
+          <MultiPageNavigator
             currentPage={currentPage}
             totalPages={pages.length}
             onPageChange={handlePageChange}
             onAddPage={handleAddPage}
-          /> */}
+          />
         </Box>
       </div>
 
@@ -485,7 +487,7 @@ const DesignerElementWrapper = ({
           // height: "120px",
 
           justifyContent: "center",
-          // backgroundColor: mouseIsOver ? "dodgerblue" : "#ECF4E6",
+          // backgroundColor: mouseIsOver ? "dodgerblue" : "#f3f9ff",
         }}
       >
         <DesignerElement elementInstance={element} />

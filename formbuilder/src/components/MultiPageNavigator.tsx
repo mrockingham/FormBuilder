@@ -1,5 +1,10 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
+import {
+  FaArrowAltCircleUp,
+  FaArrowAltCircleDown,
+  FaPlusCircle,
+} from "react-icons/fa";
 
 interface MultiPageNavigatorProps {
   currentPage: number;
@@ -17,30 +22,36 @@ const MultiPageNavigator: React.FC<MultiPageNavigatorProps> = ({
   return (
     <Box
       display="flex"
+      flexDirection="column"
       alignItems="center"
       justifyContent="center"
       gap={2}
-      sx={{ my: 2 }}
     >
       <Button
-        variant="contained"
+        variant="text"
         disabled={currentPage === 0}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        Previous
+        <FaArrowAltCircleUp size={20} />
       </Button>
+      <Box>Page</Box>
       <Box>
-        Page {currentPage + 1} of {totalPages}
+        {currentPage + 1} of {totalPages}
       </Box>
       <Button
-        variant="contained"
+        variant="text"
         disabled={currentPage === totalPages - 1}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        Next
+        <FaArrowAltCircleDown size={20} />
       </Button>
-      <Button variant="outlined" onClick={onAddPage}>
-        Add Page
+      <Button
+        style={{ display: "flex", flexDirection: "column" }}
+        variant="text"
+        onClick={onAddPage}
+      >
+        <Box>Add</Box>
+        <FaPlusCircle size={20} />
       </Button>
     </Box>
   );

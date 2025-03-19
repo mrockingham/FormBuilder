@@ -321,7 +321,7 @@ const SidebarRight: React.FC = () => {
           </Box>
           <aside
             style={{
-              boxShadow: `-20px -20px 60px #c6cdc1, 20px 20px 60px #ffffff`,
+              boxShadow: "0 0 8px gray",
               overflowY: "auto",
               backgroundColor: "white",
               width: "100%",

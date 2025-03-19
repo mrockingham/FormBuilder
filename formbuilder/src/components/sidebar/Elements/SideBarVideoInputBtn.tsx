@@ -37,11 +37,11 @@ const SideBarVideoInputBtn = () => {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  backgroundColor: "#ECF4E6",
+                  backgroundColor: "#f3f9ff",
                   border: "1px solid lightgray",
                   boxShadow: "0 0 8px gray",
                   "&:hover": {
-                    backgroundColor: "#C6E2B5",
+                    scale: "1.08",
                     boxShadow: "0 0 12px gray",
                     cursor: "pointer",
                   },
